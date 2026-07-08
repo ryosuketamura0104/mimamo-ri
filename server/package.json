@@ -1,0 +1,48 @@
+{
+  "name": "mimamori-server",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check",
+    "lint:f": "biome check --write",
+    "format": "biome format --write",
+    "db:start": "docker compose up -d postgres",
+    "db:stop": "docker compose down",
+    "db:logs": "docker compose logs -f postgres",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "dev:all": "docker compose up -d && pnpm run dev"
+  },
+  "dependencies": {
+    "@apple/app-store-server-library": "^3.1.0",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "firebase": "^12.15.0",
+    "firebase-admin": "^13.6.0",
+    "jose": "^6.2.3",
+    "next": "16.1.6",
+    "pg": "^8.16.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "swr": "^2.4.2",
+    "ulid": "^3.0.2"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@types/node": "^20",
+    "@types/pg": "^8.16.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0",
+    "typescript": "^5",
+    "vitest": "^4.1.7"
+  }
+}
