@@ -1,0 +1,55 @@
+# Node
+node_modules/
+*.log
+
+# 環境変数（機密情報含む）
+.env
+.env.local
+.env.*.local
+
+# エディタ・OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# ビルド成果物
+.next/
+dist/
+build/
+out/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# iOS / Xcode
+xcuserdata/
+DerivedData/
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/project.xcworkspace/
+!*.xcodeproj/xcshareddata/
+*.xcworkspace/xcuserdata/
+Pods/
+*.hmap
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/captures/
+android/.idea/
+android/*.iml
+android/app/*.iml
+
+# Firebase 認証ファイル（機密）
+android/app/google-services.json
+ios/GoogleService-Info.plist
+
+# Claude Code のローカル設定・レポート（個人差分）
+.claude/settings.local.json
+.claude/reports/
+.claude/scheduled_tasks.lock
+.claude/worktrees/
