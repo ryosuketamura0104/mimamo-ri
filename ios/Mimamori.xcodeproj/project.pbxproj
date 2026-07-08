@@ -1,0 +1,999 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D20598F31F9CD979DA5A0F4 /* MimamoriKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0EEB46C90DD246F56A7243CE /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		463EE5B1869F862D49BE86E4 /* SignalQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB63D29BCC896CF5A389323 /* SignalQueue.swift */; };
+		517751F1DFEFE5ABB739650C /* LockStateProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */; };
+		790FE59B66B2232A22F10B8F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5407E1AE94A993728F13687 /* Constants.swift */; };
+		86A8C01CB19E761EC9F8E38D /* MimamoriWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BB60F6C7D67E8EFC5E74BC /* MimamoriWidget.swift */; };
+		8831551EF8485BF44C279040 /* MimamoriApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2F5855E9E1F7D3094F62A /* MimamoriApp.swift */; };
+		91BF61CB21BEF91E307C1913 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E323D7FCD42433BC0108446 /* ScreenTimeManager.swift */; };
+		95D3CCF8B05818E5D9B1894B /* DeviceActivityMonitorExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9921617F30A2DC73ABC7FF7C /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406B86D5429C7F19CA3362F /* Signal.swift */; };
+		9F66C063983F4AABC107BFDB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B844A73096134071B4182E /* NotificationService.swift */; };
+		A45ABB8E29313337AD5745BE /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		A67DA0115DDD9365A90FF253 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049908307C3F1C97C72650E /* RootView.swift */; };
+		A8D0E30B7C75C362050286CB /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AF6A66F80C02F25F0B1A4EDD /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AD858AC55AF250AD27911792 /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		B87856CA0EB06C83D095E0C2 /* SignalFlusher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */; };
+		BD2BFAE79A2FEEA50833D417 /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		C059ED5F607AF2B65C206605 /* MimamoriDeviceActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E302E7FB5417852AB01645D /* MimamoriDeviceActivityMonitor.swift */; };
+		CD1D1262D6491EB53D775549 /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		E09CFDFE6912A9E2E06505FE /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */; };
+		E3797A158EDA8D42A94A43AC /* AuthTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */; };
+		E87DC5E77E3E1CDD0A46214E /* LocationPushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D64E96C01082490971A4A11 /* LocationPushService.swift */; };
+		EAEFB5597A35D9AA2432B79A /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9B5ED6C2FD033E37758A223E /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EC0664DFAC6A6D5F3A978979 /* LocationPushExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CE1382F917D8DA2446024861 /* LocationPushExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0CAB6E39D87B0B7F80BEF574 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D56721B0B3CF9AA9D7DC617;
+			remoteInfo = DeviceActivityMonitorExtension;
+		};
+		0FA8F97AF4C66AC93588CC90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E270C2EDEE728275BF39FB80;
+			remoteInfo = MimamoriKit;
+		};
+		17D79E4E79AEF64C2FF7EECB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E270C2EDEE728275BF39FB80;
+			remoteInfo = MimamoriKit;
+		};
+		2479B2FD807D9C605F0353E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E270C2EDEE728275BF39FB80;
+			remoteInfo = MimamoriKit;
+		};
+		2FCFE72B554B8DC047E33254 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E270C2EDEE728275BF39FB80;
+			remoteInfo = MimamoriKit;
+		};
+		9195132F529406B81B8D9A38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F7355576886D6EE2FEDD214;
+			remoteInfo = LocationPushExtension;
+		};
+		AAB2C24DE603ABA4B1A89A65 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E270C2EDEE728275BF39FB80;
+			remoteInfo = MimamoriKit;
+		};
+		F1457EAA9B150856AEBAFB2C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E86DEE32B4285BA867CB72B;
+			remoteInfo = WidgetExtension;
+		};
+		FDE4B1891B924721A85E1EBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 46458B7AF268646422C91FA8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 93D8974BF89FCD0ADFAB7F15;
+			remoteInfo = NotificationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		90EAA6FCA9FB69E13D405829 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0D20598F31F9CD979DA5A0F4 /* MimamoriKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F41342551632905C68A98BE1 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EAEFB5597A35D9AA2432B79A /* WidgetExtension.appex in Embed Foundation Extensions */,
+				EC0664DFAC6A6D5F3A978979 /* LocationPushExtension.appex in Embed Foundation Extensions */,
+				A8D0E30B7C75C362050286CB /* NotificationServiceExtension.appex in Embed Foundation Extensions */,
+				95D3CCF8B05818E5D9B1894B /* DeviceActivityMonitorExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1312DBB7DA5D6F9C50F7E656 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalFlusher.swift; sourceTree = "<group>"; };
+		1F0B11DA33F26E0FB4B3D3CD /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
+		2D64E96C01082490971A4A11 /* LocationPushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPushService.swift; sourceTree = "<group>"; };
+		2E302E7FB5417852AB01645D /* MimamoriDeviceActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimamoriDeviceActivityMonitor.swift; sourceTree = "<group>"; };
+		2E323D7FCD42433BC0108446 /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
+		31BB60F6C7D67E8EFC5E74BC /* MimamoriWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimamoriWidget.swift; sourceTree = "<group>"; };
+		426517CBB5CFA66E19786958 /* Mimamori.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mimamori.entitlements; sourceTree = "<group>"; };
+		4B6E2F5BDD360B4137619A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		5BA4E24FEEF5E7001695C7BE /* DeviceActivityMonitorExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeviceActivityMonitorExtension.entitlements; sourceTree = "<group>"; };
+		771D4995F0CA617B7E9787DC /* MimamoriKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MimamoriKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		81B2F5855E9E1F7D3094F62A /* MimamoriApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimamoriApp.swift; sourceTree = "<group>"; };
+		84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenProvider.swift; sourceTree = "<group>"; };
+		89B844A73096134071B4182E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		8C1C5F9DFB62D1C7D281E6C8 /* NotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		9406B86D5429C7F19CA3362F /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
+		9B5ED6C2FD033E37758A223E /* WidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CB63D29BCC896CF5A389323 /* SignalQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalQueue.swift; sourceTree = "<group>"; };
+		9CC66F62DBB65E534422C6B7 /* Mimamori.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Mimamori.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D35D8AF9DEFEF9E2658BD40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A6183D868C60A0A10E257EFB /* LocationPushExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LocationPushExtension.entitlements; sourceTree = "<group>"; };
+		AF6A66F80C02F25F0B1A4EDD /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B049908307C3F1C97C72650E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		B5407E1AE94A993728F13687 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C387D971E58109C5B0A3AC5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CD6E5C896BCDC07DC3E67F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CE1382F917D8DA2446024861 /* LocationPushExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LocationPushExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockStateProbe.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		106D547CEACF9EAF69327204 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EEB46C90DD246F56A7243CE /* MimamoriKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14E118D93752C52ECE492096 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD858AC55AF250AD27911792 /* MimamoriKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59B741EB43C7CFE59ED0C08E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A45ABB8E29313337AD5745BE /* MimamoriKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D0B6824FE60436F1E8030CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD2BFAE79A2FEEA50833D417 /* MimamoriKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A205F87CB94B0ACCA39B66F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD1D1262D6491EB53D775549 /* MimamoriKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		67BA5D4AF050D0A1A1DA0B19 /* DeviceActivityMonitorExtension */ = {
+			isa = PBXGroup;
+			children = (
+				5BA4E24FEEF5E7001695C7BE /* DeviceActivityMonitorExtension.entitlements */,
+				9D35D8AF9DEFEF9E2658BD40 /* Info.plist */,
+				2E302E7FB5417852AB01645D /* MimamoriDeviceActivityMonitor.swift */,
+			);
+			path = DeviceActivityMonitorExtension;
+			sourceTree = "<group>";
+		};
+		6D5DF1C1742658307CB714A6 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				FAB5DBC291469F97BD22C446 /* App */,
+				67BA5D4AF050D0A1A1DA0B19 /* DeviceActivityMonitorExtension */,
+				FA055DF950C1DDA21322FD0B /* LocationPushExtension */,
+				85F485EAD0AC850CD258AA23 /* MimamoriKit */,
+				A5031E019681C5579929E78C /* NotificationServiceExtension */,
+				DCCCCA6FD02483B98C9ACD0E /* WidgetExtension */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		8036E3CAE201C99C0109F5C5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */,
+				CE1382F917D8DA2446024861 /* LocationPushExtension.appex */,
+				9CC66F62DBB65E534422C6B7 /* Mimamori.app */,
+				771D4995F0CA617B7E9787DC /* MimamoriKit.framework */,
+				AF6A66F80C02F25F0B1A4EDD /* NotificationServiceExtension.appex */,
+				9B5ED6C2FD033E37758A223E /* WidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		85F485EAD0AC850CD258AA23 /* MimamoriKit */ = {
+			isa = PBXGroup;
+			children = (
+				4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */,
+				84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */,
+				B5407E1AE94A993728F13687 /* Constants.swift */,
+				F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */,
+				9406B86D5429C7F19CA3362F /* Signal.swift */,
+				1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */,
+				9CB63D29BCC896CF5A389323 /* SignalQueue.swift */,
+			);
+			path = MimamoriKit;
+			sourceTree = "<group>";
+		};
+		A5031E019681C5579929E78C /* NotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				4B6E2F5BDD360B4137619A83 /* Info.plist */,
+				89B844A73096134071B4182E /* NotificationService.swift */,
+				8C1C5F9DFB62D1C7D281E6C8 /* NotificationServiceExtension.entitlements */,
+			);
+			path = NotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		CD44A50BE7DD385179B1BE7A = {
+			isa = PBXGroup;
+			children = (
+				6D5DF1C1742658307CB714A6 /* Sources */,
+				8036E3CAE201C99C0109F5C5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DCCCCA6FD02483B98C9ACD0E /* WidgetExtension */ = {
+			isa = PBXGroup;
+			children = (
+				CD6E5C896BCDC07DC3E67F80 /* Info.plist */,
+				31BB60F6C7D67E8EFC5E74BC /* MimamoriWidget.swift */,
+				1F0B11DA33F26E0FB4B3D3CD /* WidgetExtension.entitlements */,
+			);
+			path = WidgetExtension;
+			sourceTree = "<group>";
+		};
+		FA055DF950C1DDA21322FD0B /* LocationPushExtension */ = {
+			isa = PBXGroup;
+			children = (
+				1312DBB7DA5D6F9C50F7E656 /* Info.plist */,
+				A6183D868C60A0A10E257EFB /* LocationPushExtension.entitlements */,
+				2D64E96C01082490971A4A11 /* LocationPushService.swift */,
+			);
+			path = LocationPushExtension;
+			sourceTree = "<group>";
+		};
+		FAB5DBC291469F97BD22C446 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C387D971E58109C5B0A3AC5B /* Info.plist */,
+				426517CBB5CFA66E19786958 /* Mimamori.entitlements */,
+				81B2F5855E9E1F7D3094F62A /* MimamoriApp.swift */,
+				B049908307C3F1C97C72650E /* RootView.swift */,
+				2E323D7FCD42433BC0108446 /* ScreenTimeManager.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0F7355576886D6EE2FEDD214 /* LocationPushExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2FF15C9E1D3E7255D1E11ED /* Build configuration list for PBXNativeTarget "LocationPushExtension" */;
+			buildPhases = (
+				D4EE59C8BA7ACFA81D08D7AA /* Sources */,
+				14E118D93752C52ECE492096 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA54E766A81DA5275A9BA353 /* PBXTargetDependency */,
+			);
+			name = LocationPushExtension;
+			packageProductDependencies = (
+			);
+			productName = LocationPushExtension;
+			productReference = CE1382F917D8DA2446024861 /* LocationPushExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		3E450AAF06847F506208E173 /* Mimamori */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2D509237633D5B030F92DA1 /* Build configuration list for PBXNativeTarget "Mimamori" */;
+			buildPhases = (
+				752CC58A4F4E99607B42DE77 /* Sources */,
+				A205F87CB94B0ACCA39B66F9 /* Frameworks */,
+				F41342551632905C68A98BE1 /* Embed Foundation Extensions */,
+				90EAA6FCA9FB69E13D405829 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A10E38CC21A92305B7ABBF4D /* PBXTargetDependency */,
+				5148FE00030D43DA7D0C1AB6 /* PBXTargetDependency */,
+				17B612084DD8E87DA7796CFF /* PBXTargetDependency */,
+				3C703BF0B7D2099DFCF6C447 /* PBXTargetDependency */,
+				EF7CB153CADA29F33AEF54D1 /* PBXTargetDependency */,
+			);
+			name = Mimamori;
+			packageProductDependencies = (
+			);
+			productName = Mimamori;
+			productReference = 9CC66F62DBB65E534422C6B7 /* Mimamori.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3E86DEE32B4285BA867CB72B /* WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B90918EA224DBAFB678F9EE2 /* Build configuration list for PBXNativeTarget "WidgetExtension" */;
+			buildPhases = (
+				D64592152C6BC3F1CE2FCA90 /* Sources */,
+				7D0B6824FE60436F1E8030CE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				31D15CB72C8AC19A2025BBB9 /* PBXTargetDependency */,
+			);
+			name = WidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = WidgetExtension;
+			productReference = 9B5ED6C2FD033E37758A223E /* WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		8D56721B0B3CF9AA9D7DC617 /* DeviceActivityMonitorExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3ACEAD9E24D1472C1F5A2266 /* Build configuration list for PBXNativeTarget "DeviceActivityMonitorExtension" */;
+			buildPhases = (
+				80CA5F14C2BDE3F96ED386D3 /* Sources */,
+				106D547CEACF9EAF69327204 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A77779826F9DDC8E2B4D8582 /* PBXTargetDependency */,
+			);
+			name = DeviceActivityMonitorExtension;
+			packageProductDependencies = (
+			);
+			productName = DeviceActivityMonitorExtension;
+			productReference = D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		93D8974BF89FCD0ADFAB7F15 /* NotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA5CF8B70420232AB815B7B5 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
+			buildPhases = (
+				3A71F510F68F89BDDDF758EC /* Sources */,
+				59B741EB43C7CFE59ED0C08E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3033D3CC59730760172BE28 /* PBXTargetDependency */,
+			);
+			name = NotificationServiceExtension;
+			packageProductDependencies = (
+			);
+			productName = NotificationServiceExtension;
+			productReference = AF6A66F80C02F25F0B1A4EDD /* NotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		E270C2EDEE728275BF39FB80 /* MimamoriKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E27F10B91BB6D2D42AED6DF /* Build configuration list for PBXNativeTarget "MimamoriKit" */;
+			buildPhases = (
+				6E7E6F47B8BADA2E6F2EC7F0 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MimamoriKit;
+			packageProductDependencies = (
+			);
+			productName = MimamoriKit;
+			productReference = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		46458B7AF268646422C91FA8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					0F7355576886D6EE2FEDD214 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					3E450AAF06847F506208E173 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					3E86DEE32B4285BA867CB72B = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					8D56721B0B3CF9AA9D7DC617 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					93D8974BF89FCD0ADFAB7F15 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					E270C2EDEE728275BF39FB80 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = EB930AFBB7A9A335371574F0 /* Build configuration list for PBXProject "Mimamori" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CD44A50BE7DD385179B1BE7A;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8036E3CAE201C99C0109F5C5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D56721B0B3CF9AA9D7DC617 /* DeviceActivityMonitorExtension */,
+				0F7355576886D6EE2FEDD214 /* LocationPushExtension */,
+				3E450AAF06847F506208E173 /* Mimamori */,
+				E270C2EDEE728275BF39FB80 /* MimamoriKit */,
+				93D8974BF89FCD0ADFAB7F15 /* NotificationServiceExtension */,
+				3E86DEE32B4285BA867CB72B /* WidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3A71F510F68F89BDDDF758EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F66C063983F4AABC107BFDB /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6E7E6F47B8BADA2E6F2EC7F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E09CFDFE6912A9E2E06505FE /* APIClient.swift in Sources */,
+				E3797A158EDA8D42A94A43AC /* AuthTokenProvider.swift in Sources */,
+				790FE59B66B2232A22F10B8F /* Constants.swift in Sources */,
+				517751F1DFEFE5ABB739650C /* LockStateProbe.swift in Sources */,
+				9921617F30A2DC73ABC7FF7C /* Signal.swift in Sources */,
+				B87856CA0EB06C83D095E0C2 /* SignalFlusher.swift in Sources */,
+				463EE5B1869F862D49BE86E4 /* SignalQueue.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		752CC58A4F4E99607B42DE77 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8831551EF8485BF44C279040 /* MimamoriApp.swift in Sources */,
+				A67DA0115DDD9365A90FF253 /* RootView.swift in Sources */,
+				91BF61CB21BEF91E307C1913 /* ScreenTimeManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80CA5F14C2BDE3F96ED386D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C059ED5F607AF2B65C206605 /* MimamoriDeviceActivityMonitor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4EE59C8BA7ACFA81D08D7AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E87DC5E77E3E1CDD0A46214E /* LocationPushService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D64592152C6BC3F1CE2FCA90 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				86A8C01CB19E761EC9F8E38D /* MimamoriWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		17B612084DD8E87DA7796CFF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F7355576886D6EE2FEDD214 /* LocationPushExtension */;
+			targetProxy = 9195132F529406B81B8D9A38 /* PBXContainerItemProxy */;
+		};
+		31D15CB72C8AC19A2025BBB9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E270C2EDEE728275BF39FB80 /* MimamoriKit */;
+			targetProxy = 17D79E4E79AEF64C2FF7EECB /* PBXContainerItemProxy */;
+		};
+		3C703BF0B7D2099DFCF6C447 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 93D8974BF89FCD0ADFAB7F15 /* NotificationServiceExtension */;
+			targetProxy = FDE4B1891B924721A85E1EBD /* PBXContainerItemProxy */;
+		};
+		5148FE00030D43DA7D0C1AB6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3E86DEE32B4285BA867CB72B /* WidgetExtension */;
+			targetProxy = F1457EAA9B150856AEBAFB2C /* PBXContainerItemProxy */;
+		};
+		A10E38CC21A92305B7ABBF4D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E270C2EDEE728275BF39FB80 /* MimamoriKit */;
+			targetProxy = 2479B2FD807D9C605F0353E9 /* PBXContainerItemProxy */;
+		};
+		A77779826F9DDC8E2B4D8582 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E270C2EDEE728275BF39FB80 /* MimamoriKit */;
+			targetProxy = AAB2C24DE603ABA4B1A89A65 /* PBXContainerItemProxy */;
+		};
+		E3033D3CC59730760172BE28 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E270C2EDEE728275BF39FB80 /* MimamoriKit */;
+			targetProxy = 0FA8F97AF4C66AC93588CC90 /* PBXContainerItemProxy */;
+		};
+		EF7CB153CADA29F33AEF54D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D56721B0B3CF9AA9D7DC617 /* DeviceActivityMonitorExtension */;
+			targetProxy = 0CAB6E39D87B0B7F80BEF574 /* PBXContainerItemProxy */;
+		};
+		FA54E766A81DA5275A9BA353 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E270C2EDEE728275BF39FB80 /* MimamoriKit */;
+			targetProxy = 2FCFE72B554B8DC047E33254 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		012C3F6E31172F8CD7AB95D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/LocationPushExtension/LocationPushExtension.entitlements;
+				INFOPLIST_FILE = Sources/LocationPushExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.LocationPushExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01639E694198BCC0B2ED6E0A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/App/Mimamori.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Sources/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3477F1E83E3E3CF2AB03EDC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/App/Mimamori.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = Sources/App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		44D5EDB5B5059A00329B4C4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/WidgetExtension/WidgetExtension.entitlements;
+				INFOPLIST_FILE = Sources/WidgetExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.WidgetExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5102609AF36B79352E4D6852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		5F0B144ADCE2BD5100620962 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/LocationPushExtension/LocationPushExtension.entitlements;
+				INFOPLIST_FILE = Sources/LocationPushExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.LocationPushExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		69746873BBE2AD2666308177 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		7F25EC008CDC66F195D7E330 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				INFOPLIST_FILE = Sources/NotificationServiceExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.NotificationServiceExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9B66F2029C80FC60E2F37F52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				INFOPLIST_FILE = Sources/NotificationServiceExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.NotificationServiceExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ADADEBAFF776C5F28BA3081A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/WidgetExtension/WidgetExtension.entitlements;
+				INFOPLIST_FILE = Sources/WidgetExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.WidgetExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CAE049514361493B1183E4FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/DeviceActivityMonitorExtension/DeviceActivityMonitorExtension.entitlements;
+				INFOPLIST_FILE = Sources/DeviceActivityMonitorExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.DeviceActivityMonitorExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E49C11E6E293C4AA3B8259A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Sources/DeviceActivityMonitorExtension/DeviceActivityMonitorExtension.entitlements;
+				INFOPLIST_FILE = Sources/DeviceActivityMonitorExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.DeviceActivityMonitorExtension;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E6BD44E81BDF892ED80468EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.MimamoriKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		FDDE1EE75279ACAC4B79B78B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.crouton.mimamori.MimamoriKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3ACEAD9E24D1472C1F5A2266 /* Build configuration list for PBXNativeTarget "DeviceActivityMonitorExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CAE049514361493B1183E4FF /* Debug */,
+				E49C11E6E293C4AA3B8259A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6E27F10B91BB6D2D42AED6DF /* Build configuration list for PBXNativeTarget "MimamoriKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDDE1EE75279ACAC4B79B78B /* Debug */,
+				E6BD44E81BDF892ED80468EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B90918EA224DBAFB678F9EE2 /* Build configuration list for PBXNativeTarget "WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44D5EDB5B5059A00329B4C4C /* Debug */,
+				ADADEBAFF776C5F28BA3081A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D2FF15C9E1D3E7255D1E11ED /* Build configuration list for PBXNativeTarget "LocationPushExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				012C3F6E31172F8CD7AB95D2 /* Debug */,
+				5F0B144ADCE2BD5100620962 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E2D509237633D5B030F92DA1 /* Build configuration list for PBXNativeTarget "Mimamori" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3477F1E83E3E3CF2AB03EDC9 /* Debug */,
+				01639E694198BCC0B2ED6E0A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EB930AFBB7A9A335371574F0 /* Build configuration list for PBXProject "Mimamori" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5102609AF36B79352E4D6852 /* Debug */,
+				69746873BBE2AD2666308177 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FA5CF8B70420232AB815B7B5 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9B66F2029C80FC60E2F37F52 /* Debug */,
+				7F25EC008CDC66F195D7E330 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 46458B7AF268646422C91FA8 /* Project object */;
+}

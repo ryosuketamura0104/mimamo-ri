@@ -1,0 +1,183 @@
+name: Mimamori
+options:
+  bundleIdPrefix: com.crouton.mimamori
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+configs:
+  Debug: debug
+  Release: release
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    DEVELOPMENT_TEAM: "" # 実機ビルド時に設定
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+
+# SPM 依存を追加する場合は下記の形式で packages: セクションを復活させる:
+# packages:
+#   Firebase:
+#     url: https://github.com/firebase/firebase-ios-sdk
+#     from: 11.0.0
+#   RevenueCat:
+#     url: https://github.com/RevenueCat/purchases-ios
+#     from: 5.0.0
+
+targets:
+
+  MimamoriKit:
+    type: framework
+    platform: iOS
+    sources:
+      - path: Sources/MimamoriKit
+        excludes:
+          - Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crouton.mimamori.MimamoriKit
+        DEFINES_MODULE: YES
+        SKIP_INSTALL: YES
+        GENERATE_INFOPLIST_FILE: YES
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: 1.0
+
+  Mimamori:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/App
+    resources:
+      - path: Resources
+    dependencies:
+      - target: MimamoriKit
+      - target: WidgetExtension
+        embed: true
+      - target: LocationPushExtension
+        embed: true
+      - target: NotificationServiceExtension
+        embed: true
+      - target: DeviceActivityMonitorExtension
+        embed: true
+    entitlements:
+      path: Sources/App/Mimamori.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.crouton.mimamori
+        aps-environment: development
+        com.apple.developer.usernotifications.communication: YES
+        com.apple.developer.family-controls: YES
+        # ロケーションプッシュのエンタイトルメントはApple審査後に有効化する
+        # com.apple.developer.location.push: YES
+    info:
+      path: Sources/App/Info.plist
+      properties:
+        CFBundleDisplayName: mimamo-ri
+        UILaunchScreen: {}
+        UIBackgroundModes:
+          - remote-notification
+          - location
+          - processing
+        NSLocationAlwaysAndWhenInUseUsageDescription: 見守り機能のため、位置情報を「常に許可」で使用します
+        NSLocationWhenInUseUsageDescription: 見守り機能のため、位置情報を使用します
+        NSMotionUsageDescription: 歩数から生存シグナルを取得するために使用します
+        NSUserActivityTypes:
+          - com.crouton.mimamori.ReportAlive
+        BGTaskSchedulerPermittedIdentifiers:
+          - com.crouton.mimamori.signal-sync
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crouton.mimamori
+        TARGETED_DEVICE_FAMILY: "1,2"
+
+  WidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Sources/WidgetExtension
+    dependencies:
+      - target: MimamoriKit
+    entitlements:
+      path: Sources/WidgetExtension/WidgetExtension.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.crouton.mimamori
+    info:
+      path: Sources/WidgetExtension/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crouton.mimamori.WidgetExtension
+
+  LocationPushExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Sources/LocationPushExtension
+    dependencies:
+      - target: MimamoriKit
+    entitlements:
+      path: Sources/LocationPushExtension/LocationPushExtension.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.crouton.mimamori
+        # 配布時に Apple 申請結果を反映する
+        # com.apple.developer.location.push: YES
+    info:
+      path: Sources/LocationPushExtension/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.location.push.service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).LocationPushService
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crouton.mimamori.LocationPushExtension
+
+  NotificationServiceExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Sources/NotificationServiceExtension
+    dependencies:
+      - target: MimamoriKit
+    entitlements:
+      path: Sources/NotificationServiceExtension/NotificationServiceExtension.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.crouton.mimamori
+    info:
+      path: Sources/NotificationServiceExtension/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.usernotifications.service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).NotificationService
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crouton.mimamori.NotificationServiceExtension
+
+  DeviceActivityMonitorExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Sources/DeviceActivityMonitorExtension
+    dependencies:
+      - target: MimamoriKit
+    entitlements:
+      path: Sources/DeviceActivityMonitorExtension/DeviceActivityMonitorExtension.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.crouton.mimamori
+        com.apple.developer.family-controls: YES
+    info:
+      path: Sources/DeviceActivityMonitorExtension/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).MimamoriDeviceActivityMonitor
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.crouton.mimamori.DeviceActivityMonitorExtension
