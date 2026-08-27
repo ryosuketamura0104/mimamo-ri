@@ -55,81 +55,75 @@ export default function LoginPage() {
   }
 
   return (
-    <div
-      style={{
-        maxWidth: 400,
-        margin: "3rem auto",
-        padding: "2rem",
-        fontFamily: "sans-serif",
-      }}
-    >
-      <h1>
-        {mode === "login" ? "見守る側 ログイン" : "見守る側 アカウント作成"}
-      </h1>
-      <form onSubmit={onSubmit}>
-        {mode === "register" && (
-          <label style={{ display: "block", marginBottom: "0.75rem" }}>
-            表示名
+    <div className="page-narrow">
+      <p className="brand" style={{ display: "flex", alignItems: "center" }}>
+        <span className="brand-dot" />
+        mimamo-ri
+      </p>
+      <div className="card" style={{ marginTop: "0.75rem" }}>
+        <h1 style={{ fontSize: "1.2rem" }}>
+          {mode === "login" ? "見守る側 ログイン" : "見守る側 アカウント作成"}
+        </h1>
+        <form onSubmit={onSubmit}>
+          {mode === "register" && (
+            <label className="field">
+              <span className="field-label">表示名</span>
+              <input
+                className="input"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </label>
+          )}
+          <label className="field">
+            <span className="field-label">メール</span>
             <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              className="input"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
-              style={{ width: "100%", padding: "0.5rem" }}
             />
           </label>
-        )}
-        <label style={{ display: "block", marginBottom: "0.75rem" }}>
-          メール
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: "100%", padding: "0.5rem" }}
-          />
-        </label>
-        <label style={{ display: "block", marginBottom: "0.75rem" }}>
-          パスワード(8文字以上)
-          <input
-            type="password"
-            minLength={8}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ width: "100%", padding: "0.5rem" }}
-          />
-        </label>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button
-          type="submit"
-          disabled={busy}
-          style={{ padding: "0.6rem 1.2rem", width: "100%" }}
-        >
-          {busy
-            ? "処理中..."
-            : mode === "login"
-              ? "ログイン"
-              : "アカウント作成"}
-        </button>
-      </form>
-      <p style={{ marginTop: "1rem" }}>
-        <button
-          type="button"
-          onClick={() => setMode(mode === "login" ? "register" : "login")}
-          style={{
-            background: "none",
-            border: "none",
-            color: "blue",
-            textDecoration: "underline",
-            cursor: "pointer",
-          }}
-        >
-          {mode === "login"
-            ? "アカウントを作成する"
-            : "既存アカウントでログイン"}
-        </button>
-      </p>
-      <p style={{ marginTop: "2rem", fontSize: "0.85rem", color: "#666" }}>
+          <label className="field">
+            <span className="field-label">パスワード(8文字以上)</span>
+            <input
+              className="input"
+              type="password"
+              minLength={8}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+          {error && <p className="text-error">{error}</p>}
+          <button
+            type="submit"
+            disabled={busy}
+            className="btn btn-primary btn-block"
+            style={{ marginTop: "0.5rem" }}
+          >
+            {busy
+              ? "処理中..."
+              : mode === "login"
+                ? "ログイン"
+                : "アカウント作成"}
+          </button>
+        </form>
+        <p style={{ marginTop: "1rem", marginBottom: 0 }}>
+          <button
+            type="button"
+            className="btn-text"
+            onClick={() => setMode(mode === "login" ? "register" : "login")}
+          >
+            {mode === "login"
+              ? "アカウントを作成する"
+              : "既存アカウントでログイン"}
+          </button>
+        </p>
+      </div>
+      <p className="text-muted text-small" style={{ marginTop: "1.5rem" }}>
         見守られる側はアプリからアカウントを作成してください。
       </p>
     </div>

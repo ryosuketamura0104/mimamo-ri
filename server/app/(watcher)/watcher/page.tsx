@@ -14,10 +14,10 @@ interface WatchedItem {
 }
 
 function stateBadge(state: string) {
-  const colors: Record<string, string> = {
-    confirming: "#e67e22",
-    alerted: "#c0392b",
-    normal: "#27ae60",
+  const classes: Record<string, string> = {
+    confirming: "badge badge-confirming",
+    alerted: "badge badge-alerted",
+    normal: "badge badge-normal",
   };
   const labels: Record<string, string> = {
     confirming: "確認中",
@@ -25,19 +25,7 @@ function stateBadge(state: string) {
     normal: "正常",
   };
   const s = state || "normal";
-  return (
-    <span
-      style={{
-        padding: "0.15rem 0.6rem",
-        borderRadius: "12px",
-        color: "white",
-        background: colors[s] ?? "#999",
-        fontSize: "0.8rem",
-      }}
-    >
-      {labels[s] ?? s}
-    </span>
-  );
+  return <span className={classes[s] ?? "badge"}>{labels[s] ?? s}</span>;
 }
 
 function fmt(dt: string | null): string {
@@ -70,28 +58,26 @@ function InvitationAccept({ onAccepted }: { onAccepted: () => void }) {
   }
 
   return (
-    <form
-      onSubmit={submit}
-      style={{ margin: "1.5rem 0", padding: "1rem", border: "1px dashed #ccc" }}
-    >
-      <p style={{ margin: "0 0 0.5rem 0", fontWeight: "bold" }}>
-        招待コードで見守り対象を追加
-      </p>
-      <input
-        value={code}
-        onChange={(e) => setCode(e.target.value.toUpperCase())}
-        placeholder="6桁のコード"
-        maxLength={6}
-        style={{
-          padding: "0.5rem",
-          marginRight: "0.5rem",
-          textTransform: "uppercase",
-        }}
-      />
-      <button type="submit" disabled={busy || code.length !== 6}>
-        {busy ? "追加中..." : "追加"}
-      </button>
-      {error && <p style={{ color: "red", margin: "0.5rem 0 0 0" }}>{error}</p>}
+    <form onSubmit={submit} className="card" style={{ margin: "1.25rem 0" }}>
+      <p className="card-title">招待コードで見守り対象を追加</p>
+      <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+        <input
+          className="input"
+          value={code}
+          onChange={(e) => setCode(e.target.value.toUpperCase())}
+          placeholder="6桁のコード"
+          maxLength={6}
+          style={{ maxWidth: 180, textTransform: "uppercase" }}
+        />
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={busy || code.length !== 6}
+        >
+          {busy ? "追加中..." : "追加"}
+        </button>
+      </div>
+      {error && <p className="text-error">{error}</p>}
     </form>
   );
 }
@@ -115,8 +101,8 @@ export default function WatcherHome() {
     { refreshInterval: 30_000 },
   );
 
-  if (authLoading || !ready) return <p>読み込み中...</p>;
-  if (error) return <p style={{ color: "red" }}>エラー: {String(error)}</p>;
+  if (authLoading || !ready) return <p className="text-muted">読み込み中...</p>;
+  if (error) return <p className="text-error">エラー: {String(error)}</p>;
 
   const items = data?.watched ?? [];
 
@@ -125,34 +111,34 @@ export default function WatcherHome() {
       <h1>見守り対象</h1>
       <InvitationAccept onAccepted={() => mutate()} />
       {items.length === 0 ? (
-        <p>
+        <p className="text-muted">
           まだ見守り対象がいません。相手のアプリで発行された招待コードを上記に入力してください。
         </p>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr style={{ borderBottom: "2px solid #ddd", textAlign: "left" }}>
-              <th style={{ padding: "0.6rem" }}>名前</th>
-              <th style={{ padding: "0.6rem" }}>状態</th>
-              <th style={{ padding: "0.6rem" }}>最終シグナル</th>
-              <th style={{ padding: "0.6rem" }}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((w) => (
-              <tr key={w.id} style={{ borderBottom: "1px solid #eee" }}>
-                <td style={{ padding: "0.6rem" }}>{w.name}</td>
-                <td style={{ padding: "0.6rem" }}>
-                  {stateBadge(w.escalation?.state ?? "normal")}
-                </td>
-                <td style={{ padding: "0.6rem" }}>{fmt(w.lastSignalAt)}</td>
-                <td style={{ padding: "0.6rem" }}>
-                  <a href={`/watcher/${w.id}`}>詳細</a>
-                </td>
+        <div className="card table-wrap" style={{ padding: "0.5rem 0.75rem" }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>名前</th>
+                <th>状態</th>
+                <th>最終シグナル</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {items.map((w) => (
+                <tr key={w.id}>
+                  <td>{w.name}</td>
+                  <td>{stateBadge(w.escalation?.state ?? "normal")}</td>
+                  <td>{fmt(w.lastSignalAt)}</td>
+                  <td>
+                    <a href={`/watcher/${w.id}`}>詳細</a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

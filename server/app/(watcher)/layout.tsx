@@ -2,40 +2,19 @@ import type { ReactNode } from "react";
 
 export default function WatcherLayout({ children }: { children: ReactNode }) {
   return (
-    <div
-      style={{
-        fontFamily: "sans-serif",
-        maxWidth: 960,
-        margin: "0 auto",
-        padding: "1.5rem",
-      }}
-    >
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "1.5rem",
-          borderBottom: "1px solid #ddd",
-          paddingBottom: "0.75rem",
-        }}
-      >
-        <a
-          href="/watcher"
-          style={{
-            fontWeight: "bold",
-            fontSize: "1.2rem",
-            textDecoration: "none",
-            color: "inherit",
-          }}
-        >
+    <div className="page">
+      <header className="app-header">
+        <a href="/watcher" className="brand">
+          <span className="brand-dot" />
           mimamo-ri
         </a>
-        <nav>
-          <a href="/watcher" style={{ marginRight: "1rem" }}>
+        <nav className="nav">
+          <a href="/watcher" className="nav-link">
             ダッシュボード
           </a>
-          <a href="/watcher/settings">アカウント</a>
+          <a href="/watcher/settings" className="nav-link">
+            アカウント
+          </a>
         </nav>
       </header>
       {children}

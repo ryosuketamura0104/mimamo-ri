@@ -55,7 +55,7 @@ function SettingsForm({ watchedId }: { watchedId: string }) {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
-  if (!data) return <p>設定読み込み中...</p>;
+  if (!data) return <p className="text-muted">設定読み込み中...</p>;
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -85,43 +85,44 @@ function SettingsForm({ watchedId }: { watchedId: string }) {
   return (
     <form
       onSubmit={submit}
-      style={{ display: "grid", gap: "0.75rem", maxWidth: 480 }}
+      className="card"
+      style={{ display: "grid", gap: "0.25rem", maxWidth: 480 }}
     >
-      <label>
-        途絶と判定する時間(1〜48時間)
+      <label className="field">
+        <span className="field-label">途絶と判定する時間(1〜48時間)</span>
         <input
+          className="input"
           name="thresholdHours"
           type="number"
           min={1}
           max={48}
           defaultValue={s.thresholdHours}
-          style={{ width: "100%", padding: "0.4rem" }}
         />
       </label>
-      <label>
-        静穏開始(HH:MM。この間は通知しない)
+      <label className="field">
+        <span className="field-label">静穏開始(HH:MM。この間は通知しない)</span>
         <input
+          className="input"
           name="quietStart"
           type="time"
           defaultValue={s.quietStart}
-          style={{ width: "100%", padding: "0.4rem" }}
         />
       </label>
-      <label>
-        静穏終了(HH:MM)
+      <label className="field">
+        <span className="field-label">静穏終了(HH:MM)</span>
         <input
+          className="input"
           name="quietEnd"
           type="time"
           defaultValue={s.quietEnd}
-          style={{ width: "100%", padding: "0.4rem" }}
         />
       </label>
-      <label>
-        シグナル区間刻み(時間)
+      <label className="field">
+        <span className="field-label">シグナル区間刻み(時間)</span>
         <select
+          className="input"
           name="activityIntervalHours"
           defaultValue={s.activityIntervalHours}
-          style={{ width: "100%", padding: "0.4rem" }}
         >
           <option value={1}>1時間</option>
           <option value={2}>2時間</option>
@@ -132,10 +133,12 @@ function SettingsForm({ watchedId }: { watchedId: string }) {
           <option value={12}>12時間</option>
         </select>
       </label>
-      <button type="submit" disabled={busy}>
-        {busy ? "保存中..." : "保存"}
-      </button>
-      {msg && <p style={{ margin: 0 }}>{msg}</p>}
+      <div>
+        <button type="submit" className="btn btn-primary" disabled={busy}>
+          {busy ? "保存中..." : "保存"}
+        </button>
+      </div>
+      {msg && <p style={{ margin: "0.5rem 0 0" }}>{msg}</p>}
     </form>
   );
 }
@@ -164,23 +167,24 @@ function MessageForm({ watchedId }: { watchedId: string }) {
   }
 
   return (
-    <form onSubmit={submit}>
+    <form onSubmit={submit} className="card">
       <textarea
+        className="input"
         value={body}
         onChange={(e) => setBody(e.target.value)}
         maxLength={200}
         placeholder="Widget に表示するメッセージ(200文字以内)"
         rows={3}
-        style={{ width: "100%", padding: "0.5rem" }}
       />
       <button
         type="submit"
+        className="btn btn-primary"
         disabled={busy || body.trim().length === 0}
-        style={{ marginTop: "0.5rem" }}
+        style={{ marginTop: "0.75rem" }}
       >
         {busy ? "送信中..." : "送信"}
       </button>
-      {msg && <p style={{ margin: "0.5rem 0 0 0" }}>{msg}</p>}
+      {msg && <p style={{ margin: "0.5rem 0 0" }}>{msg}</p>}
     </form>
   );
 }
@@ -214,7 +218,7 @@ export default function WatchedDetailPage({
     refreshInterval: 30_000,
   });
 
-  if (!ready) return <p>読み込み中...</p>;
+  if (!ready) return <p className="text-muted">読み込み中...</p>;
 
   const active = escData?.escalations.find(
     (e) => e.state === "confirming" || e.state === "alerted",
@@ -231,19 +235,18 @@ export default function WatchedDetailPage({
 
   return (
     <div>
-      <p>
+      <p className="text-small">
         <a href="/watcher">← ダッシュボードに戻る</a>
       </p>
       <h1>見守り対象 詳細</h1>
 
       {active && (
         <div
-          style={{
-            background: active.state === "alerted" ? "#f9d6d6" : "#fce4c9",
-            padding: "1rem",
-            borderRadius: 8,
-            marginBottom: "1rem",
-          }}
+          className={
+            active.state === "alerted"
+              ? "alert alert-danger"
+              : "alert alert-warn"
+          }
         >
           <strong>
             {active.state === "alerted" ? "アラート中" : "本人確認中"}
@@ -252,7 +255,11 @@ export default function WatchedDetailPage({
             開始: {fmt(active.startedAt)} / 最終シグナル:{" "}
             {fmt(active.lastSignalAt)}
           </p>
-          <button type="button" onClick={() => resolve(active.id)}>
+          <button
+            type="button"
+            className="btn btn-tonal"
+            onClick={() => resolve(active.id)}
+          >
             解消する
           </button>
         </div>
@@ -260,42 +267,46 @@ export default function WatchedDetailPage({
 
       <h2>シグナルタイムライン(直近100件)</h2>
       {signalsData?.signals.length === 0 ? (
-        <p>シグナルはまだありません。</p>
+        <p className="text-muted">シグナルはまだありません。</p>
       ) : (
-        <ul style={{ paddingLeft: "1rem", maxHeight: 300, overflow: "auto" }}>
-          {signalsData?.signals.map((s) => (
-            <li key={s.id} style={{ marginBottom: "0.25rem" }}>
-              <span style={{ color: "#666" }}>{fmt(s.observedAt)}</span> —{" "}
-              {SIGNAL_LABELS[s.type] ?? s.type}
-            </li>
-          ))}
-        </ul>
+        <div className="card" style={{ padding: "0.5rem 1rem" }}>
+          <ul className="timeline">
+            {signalsData?.signals.map((s) => (
+              <li key={s.id}>
+                <span className="timeline-time">{fmt(s.observedAt)}</span>
+                <span>{SIGNAL_LABELS[s.type] ?? s.type}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       <h2>エスカレーション履歴</h2>
       {escData?.escalations.length === 0 ? (
-        <p>履歴はありません。</p>
+        <p className="text-muted">履歴はありません。</p>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-          <thead>
-            <tr style={{ borderBottom: "1px solid #ddd", textAlign: "left" }}>
-              <th style={{ padding: "0.4rem" }}>開始</th>
-              <th style={{ padding: "0.4rem" }}>状態</th>
-              <th style={{ padding: "0.4rem" }}>アラート</th>
-              <th style={{ padding: "0.4rem" }}>解消</th>
-            </tr>
-          </thead>
-          <tbody>
-            {escData?.escalations.map((e) => (
-              <tr key={e.id} style={{ borderBottom: "1px solid #f0f0f0" }}>
-                <td style={{ padding: "0.4rem" }}>{fmt(e.startedAt)}</td>
-                <td style={{ padding: "0.4rem" }}>{e.state}</td>
-                <td style={{ padding: "0.4rem" }}>{fmt(e.alertedAt)}</td>
-                <td style={{ padding: "0.4rem" }}>{fmt(e.resolvedAt)}</td>
+        <div className="card table-wrap" style={{ padding: "0.5rem 0.75rem" }}>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>開始</th>
+                <th>状態</th>
+                <th>アラート</th>
+                <th>解消</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {escData?.escalations.map((e) => (
+                <tr key={e.id}>
+                  <td>{fmt(e.startedAt)}</td>
+                  <td>{e.state}</td>
+                  <td>{fmt(e.alertedAt)}</td>
+                  <td>{fmt(e.resolvedAt)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       <h2>Widget メッセージを送る</h2>
