@@ -19,6 +19,14 @@ dist/
 build/
 out/
 
+# Firebase クライアント設定(各自配置。ローカルはエミュレータ用ダミーを置く)
+android/app/google-services.json
+ios/Resources/GoogleService-Info.plist
+
+# Android ローカル設定
+android/local.properties
+android/.gradle/
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
