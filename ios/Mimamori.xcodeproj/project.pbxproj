@@ -7,17 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A4864C43F42B7EF9037F95E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB1E29BF47AF2982EE18CA /* AuthManager.swift */; };
 		0D20598F31F9CD979DA5A0F4 /* MimamoriKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0EEB46C90DD246F56A7243CE /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		372AE8966F7B7B6976F56DC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D0D3F20772112B838E29 /* SettingsView.swift */; };
 		463EE5B1869F862D49BE86E4 /* SignalQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB63D29BCC896CF5A389323 /* SignalQueue.swift */; };
+		49E02C4284EEAF3DFC46978C /* LocationPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DEE4EFBF8CD2669BE57C04 /* LocationPushManager.swift */; };
 		517751F1DFEFE5ABB739650C /* LockStateProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */; };
+		5998FB95643C7B4DA93B1F70 /* AppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F17444A3564E81A583DF063 /* AppShortcuts.swift */; };
+		623BFA36F797A841D73BCCCA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8C37B210B6BFAEEAA9DA112E /* FirebaseAuth */; };
 		790FE59B66B2232A22F10B8F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5407E1AE94A993728F13687 /* Constants.swift */; };
+		7C6468081EB58FEFBF50445E /* PedometerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A9536774CC82E041A485FE /* PedometerManager.swift */; };
 		86A8C01CB19E761EC9F8E38D /* MimamoriWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BB60F6C7D67E8EFC5E74BC /* MimamoriWidget.swift */; };
 		8831551EF8485BF44C279040 /* MimamoriApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B2F5855E9E1F7D3094F62A /* MimamoriApp.swift */; };
+		8B7D6E060419DA9DE5D0EC10 /* BrandColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984A3E7AF7A3B943C8317B5C /* BrandColor.swift */; };
 		91BF61CB21BEF91E307C1913 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E323D7FCD42433BC0108446 /* ScreenTimeManager.swift */; };
 		95D3CCF8B05818E5D9B1894B /* DeviceActivityMonitorExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		962AF88F0701744629276595 /* WidgetContentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC87BE25939E2784C09F439 /* WidgetContentStore.swift */; };
 		9921617F30A2DC73ABC7FF7C /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9406B86D5429C7F19CA3362F /* Signal.swift */; };
 		9F66C063983F4AABC107BFDB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B844A73096134071B4182E /* NotificationService.swift */; };
+		A2271DCFB7ACDA16CA065598 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA4D2B44F8E0B766C5CE0EC /* LoginView.swift */; };
 		A45ABB8E29313337AD5745BE /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
 		A67DA0115DDD9365A90FF253 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B049908307C3F1C97C72650E /* RootView.swift */; };
 		A8D0E30B7C75C362050286CB /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AF6A66F80C02F25F0B1A4EDD /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -31,6 +40,7 @@
 		E87DC5E77E3E1CDD0A46214E /* LocationPushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D64E96C01082490971A4A11 /* LocationPushService.swift */; };
 		EAEFB5597A35D9AA2432B79A /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9B5ED6C2FD033E37758A223E /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EC0664DFAC6A6D5F3A978979 /* LocationPushExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CE1382F917D8DA2446024861 /* LocationPushExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EF372DC81F72688E1273ABCA /* OffloadGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B047109EE3D2364CDC707D3 /* OffloadGuard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,20 +141,27 @@
 		1312DBB7DA5D6F9C50F7E656 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalFlusher.swift; sourceTree = "<group>"; };
 		1F0B11DA33F26E0FB4B3D3CD /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
+		2CA4D2B44F8E0B766C5CE0EC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		2D64E96C01082490971A4A11 /* LocationPushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPushService.swift; sourceTree = "<group>"; };
 		2E302E7FB5417852AB01645D /* MimamoriDeviceActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimamoriDeviceActivityMonitor.swift; sourceTree = "<group>"; };
 		2E323D7FCD42433BC0108446 /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
 		31BB60F6C7D67E8EFC5E74BC /* MimamoriWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimamoriWidget.swift; sourceTree = "<group>"; };
+		3EE6D0D3F20772112B838E29 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		426517CBB5CFA66E19786958 /* Mimamori.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mimamori.entitlements; sourceTree = "<group>"; };
+		48DEE4EFBF8CD2669BE57C04 /* LocationPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPushManager.swift; sourceTree = "<group>"; };
 		4B6E2F5BDD360B4137619A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		5B047109EE3D2364CDC707D3 /* OffloadGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffloadGuard.swift; sourceTree = "<group>"; };
 		5BA4E24FEEF5E7001695C7BE /* DeviceActivityMonitorExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeviceActivityMonitorExtension.entitlements; sourceTree = "<group>"; };
+		63DB1E29BF47AF2982EE18CA /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		6F17444A3564E81A583DF063 /* AppShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppShortcuts.swift; sourceTree = "<group>"; };
 		771D4995F0CA617B7E9787DC /* MimamoriKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MimamoriKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81B2F5855E9E1F7D3094F62A /* MimamoriApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimamoriApp.swift; sourceTree = "<group>"; };
 		84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenProvider.swift; sourceTree = "<group>"; };
 		89B844A73096134071B4182E /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		8C1C5F9DFB62D1C7D281E6C8 /* NotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationServiceExtension.entitlements; sourceTree = "<group>"; };
 		9406B86D5429C7F19CA3362F /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
+		984A3E7AF7A3B943C8317B5C /* BrandColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandColor.swift; sourceTree = "<group>"; };
 		9B5ED6C2FD033E37758A223E /* WidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CB63D29BCC896CF5A389323 /* SignalQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalQueue.swift; sourceTree = "<group>"; };
 		9CC66F62DBB65E534422C6B7 /* Mimamori.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Mimamori.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,10 +171,12 @@
 		B049908307C3F1C97C72650E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B5407E1AE94A993728F13687 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C387D971E58109C5B0A3AC5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C6A9536774CC82E041A485FE /* PedometerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerManager.swift; sourceTree = "<group>"; };
 		CD6E5C896BCDC07DC3E67F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CE1382F917D8DA2446024861 /* LocationPushExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LocationPushExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockStateProbe.swift; sourceTree = "<group>"; };
+		FDC87BE25939E2784C09F439 /* WidgetContentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContentStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD1D1262D6491EB53D775549 /* MimamoriKit.framework in Frameworks */,
+				623BFA36F797A841D73BCCCA /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,11 +265,13 @@
 			children = (
 				4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */,
 				84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */,
+				984A3E7AF7A3B943C8317B5C /* BrandColor.swift */,
 				B5407E1AE94A993728F13687 /* Constants.swift */,
 				F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */,
 				9406B86D5429C7F19CA3362F /* Signal.swift */,
 				1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */,
 				9CB63D29BCC896CF5A389323 /* SignalQueue.swift */,
+				FDC87BE25939E2784C09F439 /* WidgetContentStore.swift */,
 			);
 			path = MimamoriKit;
 			sourceTree = "<group>";
@@ -295,11 +317,18 @@
 		FAB5DBC291469F97BD22C446 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				6F17444A3564E81A583DF063 /* AppShortcuts.swift */,
+				63DB1E29BF47AF2982EE18CA /* AuthManager.swift */,
 				C387D971E58109C5B0A3AC5B /* Info.plist */,
+				48DEE4EFBF8CD2669BE57C04 /* LocationPushManager.swift */,
+				2CA4D2B44F8E0B766C5CE0EC /* LoginView.swift */,
 				426517CBB5CFA66E19786958 /* Mimamori.entitlements */,
 				81B2F5855E9E1F7D3094F62A /* MimamoriApp.swift */,
+				5B047109EE3D2364CDC707D3 /* OffloadGuard.swift */,
+				C6A9536774CC82E041A485FE /* PedometerManager.swift */,
 				B049908307C3F1C97C72650E /* RootView.swift */,
 				2E323D7FCD42433BC0108446 /* ScreenTimeManager.swift */,
+				3EE6D0D3F20772112B838E29 /* SettingsView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -346,6 +375,7 @@
 			);
 			name = Mimamori;
 			packageProductDependencies = (
+				8C37B210B6BFAEEAA9DA112E /* FirebaseAuth */,
 			);
 			productName = Mimamori;
 			productReference = 9CC66F62DBB65E534422C6B7 /* Mimamori.app */;
@@ -469,6 +499,9 @@
 			);
 			mainGroup = CD44A50BE7DD385179B1BE7A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1C1BF5D9FA92499B84641718 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 8036E3CAE201C99C0109F5C5 /* Products */;
 			projectDirPath = "";
@@ -499,11 +532,13 @@
 			files = (
 				E09CFDFE6912A9E2E06505FE /* APIClient.swift in Sources */,
 				E3797A158EDA8D42A94A43AC /* AuthTokenProvider.swift in Sources */,
+				8B7D6E060419DA9DE5D0EC10 /* BrandColor.swift in Sources */,
 				790FE59B66B2232A22F10B8F /* Constants.swift in Sources */,
 				517751F1DFEFE5ABB739650C /* LockStateProbe.swift in Sources */,
 				9921617F30A2DC73ABC7FF7C /* Signal.swift in Sources */,
 				B87856CA0EB06C83D095E0C2 /* SignalFlusher.swift in Sources */,
 				463EE5B1869F862D49BE86E4 /* SignalQueue.swift in Sources */,
+				962AF88F0701744629276595 /* WidgetContentStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,9 +546,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5998FB95643C7B4DA93B1F70 /* AppShortcuts.swift in Sources */,
+				0A4864C43F42B7EF9037F95E /* AuthManager.swift in Sources */,
+				49E02C4284EEAF3DFC46978C /* LocationPushManager.swift in Sources */,
+				A2271DCFB7ACDA16CA065598 /* LoginView.swift in Sources */,
 				8831551EF8485BF44C279040 /* MimamoriApp.swift in Sources */,
+				EF372DC81F72688E1273ABCA /* OffloadGuard.swift in Sources */,
+				7C6468081EB58FEFBF50445E /* PedometerManager.swift in Sources */,
 				A67DA0115DDD9365A90FF253 /* RootView.swift in Sources */,
 				91BF61CB21BEF91E307C1913 /* ScreenTimeManager.swift in Sources */,
+				372AE8966F7B7B6976F56DC5 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,6 +704,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				API_BASE_URL = "http://localhost:3100";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -698,6 +741,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -744,6 +788,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				API_BASE_URL = "http://localhost:3100";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -994,6 +1039,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1C1BF5D9FA92499B84641718 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8C37B210B6BFAEEAA9DA112E /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C1BF5D9FA92499B84641718 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 46458B7AF268646422C91FA8 /* Project object */;
 }

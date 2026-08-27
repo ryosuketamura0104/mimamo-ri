@@ -1,9 +1,14 @@
 import MimamoriKit
 import UserNotifications
 
-/// UNNotificationServiceExtension: 通知受信時にコード実行できる正規手段。
-/// 通知そのものは表示するが、この隙に生存シグナル(nse)を記録し、
-/// SignalQueue の滞留分もサーバーに送る。
+/// UNNotificationServiceExtension: mutable-content 付きの通知受信時にコード実行できる正規手段。
+///
+/// ここで行うこと:
+///   1. 生存シグナル(nse)の記録と滞留分のフラッシュ
+///   2. kind == widget_refresh の場合、通知ペイロードの内容を Widget の
+///      共有ストアに書き込み、タイムライン再読込を要求する。
+///      これにより「アプリ本体を一度も開かなくても」見守る側が送った
+///      メッセージが Widget に反映される
 final class NotificationService: UNNotificationServiceExtension {
 
     private var contentHandler: ((UNNotificationContent) -> Void)?
@@ -13,12 +18,21 @@ final class NotificationService: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
         self.bestAttempt = request.content.mutableCopy() as? UNMutableNotificationContent
 
+        let kind = request.content.userInfo["kind"] as? String
+
         Task {
+            // widget_refresh: 通知の title/body をそのまま Widget に反映
+            if kind == "widget_refresh" {
+                WidgetContentStore.write(title: request.content.title, body: request.content.body)
+            }
+
             let unlocked = LockStateProbe.isDeviceUnlocked()
             var meta: [String: String] = [:]
             if let u = unlocked { meta["unlocked"] = u ? "true" : "false" }
+            if let kind { meta["kind"] = kind }
             await SignalQueue.shared.append(Signal(type: SignalType.nse, meta: meta))
             await SignalFlusher.flush()
+
             if let content = self.bestAttempt {
                 contentHandler(content)
             } else {

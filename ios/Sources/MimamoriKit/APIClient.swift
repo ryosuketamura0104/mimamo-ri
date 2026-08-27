@@ -1,8 +1,8 @@
 import Foundation
 
 /// サーバー API クライアント。
-/// アプリ本体と拡張(NSE/LocationPush 等)から共通で使う。
-public final class APIClient {
+/// アプリ本体と拡張(NSE/Widget/LocationPush 等)から共通で使う。
+public final class APIClient: Sendable {
     public let baseURL: URL
     public let tokenProvider: AuthTokenProvider
     private let session: URLSession
@@ -13,8 +13,16 @@ public final class APIClient {
         self.session = session
     }
 
+    // MARK: - エンドポイント
+
     private struct SignalsBody: Encodable { let signals: [Signal] }
     private struct SignalsResponse: Decodable { let inserted: Int; let resolvedEscalationId: String? }
+
+    @discardableResult
+    public func postSignals(_ signals: [Signal]) async throws -> Int {
+        let response: SignalsResponse = try await requestJSON("POST", "/api/v1/signals", body: SignalsBody(signals: signals))
+        return response.inserted
+    }
 
     private struct RegisterDeviceBody: Encodable {
         let platform: String
@@ -24,42 +32,128 @@ public final class APIClient {
         let osVersion: String?
     }
 
-    @discardableResult
-    public func postSignals(_ signals: [Signal]) async throws -> Int {
-        let response: SignalsResponse = try await postJSON("/api/v1/signals", body: SignalsBody(signals: signals))
-        return response.inserted
-    }
-
     public func registerDevice(pushToken: String? = nil, locationPushToken: String? = nil, appVersion: String? = nil, osVersion: String? = nil) async throws {
         let body = RegisterDeviceBody(platform: "ios", pushToken: pushToken, locationPushToken: locationPushToken, appVersion: appVersion, osVersion: osVersion)
-        let _: [String: AnyCodable] = try await postJSON("/api/v1/devices", body: body)
+        try await requestIgnoringResponse("POST", "/api/v1/devices", body: body)
     }
 
-    public func checkin() async throws {
+    private struct RegisterUserBody: Encodable {
+        let role: String
+        let name: String
+        let timezone: String
+    }
+
+    /// 初回ユーザー登録。登録済みなら既存ユーザーが返る(冪等)。
+    public func registerUser(role: String, name: String, timezone: String = TimeZone.current.identifier) async throws {
+        let body = RegisterUserBody(role: role, name: name, timezone: timezone)
+        try await requestIgnoringResponse("POST", "/api/v1/users/register", body: body)
+    }
+
+    @discardableResult
+    public func checkin() async throws -> String? {
         struct Empty: Encodable {}
         struct Resp: Decodable { let resolvedEscalationId: String? }
-        let _: Resp = try await postJSON("/api/v1/checkin", body: Empty())
+        let resp: Resp = try await requestJSON("POST", "/api/v1/checkin", body: Empty())
+        return resp.resolvedEscalationId
     }
 
-    private func postJSON<Body: Encodable, Response: Decodable>(_ path: String, body: Body) async throws -> Response {
-        let url = baseURL.appendingPathComponent(path)
+    public struct Invitation: Decodable, Sendable {
+        public let code: String
+        public let expiresAt: Date
+    }
+
+    /// ペアリング用の6桁招待コードを発行する(見守られる側のみ)。
+    public func createInvitation() async throws -> Invitation {
+        struct Empty: Encodable {}
+        return try await requestJSON("POST", "/api/v1/invitations", body: Empty())
+    }
+
+    public struct WatchedMessage: Decodable, Sendable {
+        public let id: String
+        public let body: String
+        public let createdAt: Date
+    }
+
+    /// 見守る側からの最新メッセージを取得(見守られる側自身のみ)。
+    public func fetchMessages(limit: Int = 1) async throws -> [WatchedMessage] {
+        struct Resp: Decodable { let messages: [APIClient.WatchedMessage] }
+        let resp: Resp = try await requestJSON("GET", "/api/v1/messages", query: [URLQueryItem(name: "limit", value: String(limit))])
+        return resp.messages
+    }
+
+    // MARK: - 共通処理
+
+    private struct NoBody: Encodable {}
+
+    private func requestJSON<Response: Decodable>(_ method: String, _ path: String, query: [URLQueryItem]? = nil) async throws -> Response {
+        let data = try await requestData(method, path, body: NoBody?.none, query: query)
+        return try Self.decoder.decode(Response.self, from: data)
+    }
+
+    private func requestJSON<Body: Encodable, Response: Decodable>(_ method: String, _ path: String, body: Body, query: [URLQueryItem]? = nil) async throws -> Response {
+        let data = try await requestData(method, path, body: body, query: query)
+        return try Self.decoder.decode(Response.self, from: data)
+    }
+
+    /// レスポンスボディを読み捨てるリクエスト(ステータスのみ確認)。
+    private func requestIgnoringResponse<Body: Encodable>(_ method: String, _ path: String, body: Body) async throws {
+        _ = try await requestData(method, path, body: body, query: nil)
+    }
+
+    private func requestData<Body: Encodable>(_ method: String, _ path: String, body: Body?, query: [URLQueryItem]?) async throws -> Data {
+        var url = baseURL.appendingPathComponent(path)
+        if let query, var comps = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            comps.queryItems = query
+            url = comps.url ?? url
+        }
         var req = URLRequest(url: url)
-        req.httpMethod = "POST"
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpMethod = method
         let token = try await tokenProvider.currentIdToken()
         req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        req.httpBody = try encoder.encode(body)
+        if let body {
+            req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            req.httpBody = try Self.encoder.encode(body)
+        }
         let (data, resp) = try await session.data(for: req)
         guard let http = resp as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
             throw NSError(domain: "APIClient", code: (resp as? HTTPURLResponse)?.statusCode ?? -1)
         }
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return try decoder.decode(Response.self, from: data)
+        return data
     }
-}
 
-/// 任意の JSON レスポンスを受けるための緩いデコード。
-public struct AnyCodable: Codable {}
+    // サーバー(JS)は "2026-08-27T01:23:45.678Z" のようにミリ秒付き ISO 8601 を返すため、
+    // Foundation 標準の .iso8601 戦略では解釈できない。両対応のフォーマッタを使う。
+    private static let isoWithFraction: ISO8601DateFormatter = {
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return f
+    }()
+
+    private static let isoPlain: ISO8601DateFormatter = {
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withInternetDateTime]
+        return f
+    }()
+
+    private static let decoder: JSONDecoder = {
+        let d = JSONDecoder()
+        d.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let s = try container.decode(String.self)
+            if let date = isoWithFraction.date(from: s) ?? isoPlain.date(from: s) {
+                return date
+            }
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "日付を解釈できません: \(s)")
+        }
+        return d
+    }()
+
+    private static let encoder: JSONEncoder = {
+        let e = JSONEncoder()
+        e.dateEncodingStrategy = .custom { date, encoder in
+            var container = encoder.singleValueContainer()
+            try container.encode(isoWithFraction.string(from: date))
+        }
+        return e
+    }()
+}

@@ -16,12 +16,19 @@ settings:
     DEVELOPMENT_TEAM: "" # 実機ビルド時に設定
     CODE_SIGN_STYLE: Automatic
     ENABLE_USER_SCRIPT_SANDBOXING: NO
+    # サーバー API のベース URL。各ターゲットの Info.plist (APIBaseURL) に展開される。
+    # 本番配布時は Release 設定で上書きする。
+    API_BASE_URL: http://localhost:3100
+  configs:
+    Debug:
+      # ローカル開発: Firebase Auth エミュレータ(空なら本番 Firebase を使用)
+      FIREBASE_AUTH_EMULATOR_HOST: 127.0.0.1:9099
 
-# SPM 依存を追加する場合は下記の形式で packages: セクションを復活させる:
-# packages:
-#   Firebase:
-#     url: https://github.com/firebase/firebase-ios-sdk
-#     from: 11.0.0
+packages:
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 12.0.0
+# RevenueCat 導入時:
 #   RevenueCat:
 #     url: https://github.com/RevenueCat/purchases-ios
 #     from: 5.0.0
@@ -53,6 +60,8 @@ targets:
       - path: Resources
     dependencies:
       - target: MimamoriKit
+      - package: Firebase
+        product: FirebaseAuth
       - target: WidgetExtension
         embed: true
       - target: LocationPushExtension
@@ -76,6 +85,16 @@ targets:
       properties:
         CFBundleDisplayName: mimamo-ri
         UILaunchScreen: {}
+        APIBaseURL: $(API_BASE_URL)
+        FirebaseAuthEmulatorHost: $(FIREBASE_AUTH_EMULATOR_HOST)
+        # Widget からの起動導線用カスタム URL スキーム
+        CFBundleURLTypes:
+          - CFBundleURLName: com.crouton.mimamori
+            CFBundleURLSchemes:
+              - mimamori
+        # 開発時に http://localhost へ接続するための ATS 例外(ローカルのみ)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
         UIBackgroundModes:
           - remote-notification
           - location
@@ -107,6 +126,9 @@ targets:
     info:
       path: Sources/WidgetExtension/Info.plist
       properties:
+        APIBaseURL: $(API_BASE_URL)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:
@@ -130,6 +152,9 @@ targets:
     info:
       path: Sources/LocationPushExtension/Info.plist
       properties:
+        APIBaseURL: $(API_BASE_URL)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
         NSExtension:
           NSExtensionPointIdentifier: com.apple.location.push.service
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).LocationPushService
@@ -152,6 +177,9 @@ targets:
     info:
       path: Sources/NotificationServiceExtension/Info.plist
       properties:
+        APIBaseURL: $(API_BASE_URL)
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
         NSExtension:
           NSExtensionPointIdentifier: com.apple.usernotifications.service
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).NotificationService
