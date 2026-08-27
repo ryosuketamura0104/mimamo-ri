@@ -46,6 +46,10 @@ export async function pushCheckinRequest(
           title: "元気ですか？",
           body: "タップして「元気です」を教えてください",
           interruptionLevel: "time-sensitive",
+          // category: 通知に「元気です」アクションを付ける(アプリを開かず応答可能)
+          // mutable-content: NSE を起動して nse シグナル記録とキュー送信を行わせる
+          category: "CHECKIN_REQUEST",
+          mutableContent: true,
           data: { kind: "checkin_request", escalationId },
         }),
       });

@@ -114,6 +114,8 @@ export function apnsAlertPayload(opts: {
   interruptionLevel?: InterruptionLevel;
   data?: Record<string, unknown>;
   mutableContent?: boolean;
+  /** iOS 側で登録した通知カテゴリ ID(アクションボタン表示用) */
+  category?: string;
 }): Record<string, unknown> {
   return {
     aps: {
@@ -121,6 +123,7 @@ export function apnsAlertPayload(opts: {
       sound: "default",
       "interruption-level": opts.interruptionLevel ?? "active",
       ...(opts.mutableContent ? { "mutable-content": 1 } : {}),
+      ...(opts.category ? { category: opts.category } : {}),
     },
     ...(opts.data ?? {}),
   };
