@@ -17,10 +17,20 @@ private val Context.signalPrefs by preferencesDataStore("mimamori_signals")
 private val LAST_SYNC_KEY = longPreferencesKey("last_usage_sync_epoch_ms")
 
 /**
+ * 収集結果。signals の送信成功後に syncedUntil を commitSyncedUntil で確定させる。
+ */
+data class CollectedSignals(
+    val signals: List<SignalReport>,
+    val syncedUntil: Instant,
+)
+
+/**
  * UsageStatsManager から画面ON/ロック解除/アプリforeground イベントを取得し、
  * 前回同期以降の差分を SignalReport に変換する。
  *
- * PACKAGE_USAGE_STATS 権限が必要。未付与なら空リストを返す。
+ * PACKAGE_USAGE_STATS 権限が必要。未付与なら null を返す。
+ * 収集(collectSince)とウォーターマーク確定(commitSyncedUntil)は分離しており、
+ * 送信失敗時に確定しなければ同区間は次回再クエリされる(UsageStats は OS 側に履歴が残る)。
  */
 object UsageStatsCollector {
 
@@ -34,8 +44,12 @@ object UsageStatsCollector {
         return mode == AppOpsManager.MODE_ALLOWED
     }
 
-    suspend fun collectSince(context: Context, now: Instant = Instant.now()): List<SignalReport> {
-        if (!hasPermission(context)) return emptyList()
+    /**
+     * 前回確定済みウォーターマーク以降のイベントを収集する。ここではウォーターマークを進めない。
+     * postSignals 成功後に commitSyncedUntil(syncedUntil) を呼ぶこと。
+     */
+    suspend fun collectSince(context: Context, now: Instant = Instant.now()): CollectedSignals? {
+        if (!hasPermission(context)) return null
         val prefs = context.signalPrefs.data.first()
         val lastMs = prefs[LAST_SYNC_KEY] ?: (now.toEpochMilli() - 6 * 3600_000L)
         val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
@@ -57,7 +71,14 @@ object UsageStatsCollector {
             )
         }
         // 冪等: 同一時刻の重複はサーバー側で dedup されるため、そのまま送信
-        context.signalPrefs.edit { it[LAST_SYNC_KEY] = now.toEpochMilli() }
-        return result
+        return CollectedSignals(signals = result, syncedUntil = now)
+    }
+
+    /**
+     * ウォーターマークを確定する。postSignals 成功後にのみ呼ぶこと。
+     * 呼ばなければ同区間のシグナルは次回の collectSince で再収集される。
+     */
+    suspend fun commitSyncedUntil(context: Context, until: Instant) {
+        context.signalPrefs.edit { it[LAST_SYNC_KEY] = until.toEpochMilli() }
     }
 }

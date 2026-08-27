@@ -6,7 +6,9 @@ import com.crouton.mimamori.MimamoriApp
 import com.crouton.mimamori.R
 import com.crouton.mimamori.api.ApiClient
 import com.crouton.mimamori.auth.FirebaseAuthProvider
+import com.crouton.mimamori.push.PushTokenRegistrar
 import com.crouton.mimamori.signal.UsageStatsCollector
+import com.crouton.mimamori.widget.WidgetUpdater
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
@@ -24,12 +26,9 @@ import kotlinx.coroutines.launch
 class MimamoriFcmService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
-        val auth = FirebaseAuthProvider()
-        if (auth.currentUserId() == null) return
-        val api = ApiClient(auth)
+        // ログイン前の発火では登録されない。ログイン確立時に MainActivity 側で再登録される
         CoroutineScope(Dispatchers.IO).launch {
-            runCatching { api.registerDevice(token) }
-            api.close()
+            runCatching { PushTokenRegistrar.registerToken(token) }
         }
     }
 
@@ -43,8 +42,12 @@ class MimamoriFcmService : FirebaseMessagingService() {
             val api = ApiClient(auth)
             CoroutineScope(Dispatchers.IO).launch {
                 runCatching {
-                    val signals = UsageStatsCollector.collectSince(applicationContext)
-                    if (signals.isNotEmpty()) api.postSignals(signals)
+                    val collected = UsageStatsCollector.collectSince(applicationContext)
+                    if (collected != null) {
+                        if (collected.signals.isNotEmpty()) api.postSignals(collected.signals)
+                        // 送信成功後にのみウォーターマークを確定する(失敗時は次回再収集)
+                        UsageStatsCollector.commitSyncedUntil(applicationContext, collected.syncedUntil)
+                    }
                 }
                 api.close()
             }
@@ -62,8 +65,13 @@ class MimamoriFcmService : FirebaseMessagingService() {
                 body = message.notification?.body ?: "確認をお願いします",
             )
             "widget_refresh" -> {
-                // Widget の再描画は Widget 側の onEnabled/scheduled から
-                // TODO: GlanceAppWidget の update をここでトリガーする
+                if (auth.currentUserId() != null) {
+                    val api = ApiClient(auth)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        runCatching { WidgetUpdater.refreshLatestMessage(applicationContext, api) }
+                        api.close()
+                    }
+                }
             }
         }
     }
