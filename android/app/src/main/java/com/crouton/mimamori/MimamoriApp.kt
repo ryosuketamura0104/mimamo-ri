@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.crouton.mimamori.work.scheduleUsageSyncWorker
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * mimamo-ri Android アプリケーションのエントリポイント。
@@ -18,6 +19,11 @@ class MimamoriApp : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        // ローカル開発: Auth エミュレータへ接続(最初の Auth 利用より前に一度だけ呼ぶ)
+        if (BuildConfig.AUTH_EMULATOR_HOST.isNotEmpty()) {
+            val parts = BuildConfig.AUTH_EMULATOR_HOST.split(":")
+            FirebaseAuth.getInstance().useEmulator(parts[0], parts.getOrNull(1)?.toIntOrNull() ?: 9099)
+        }
         setupNotificationChannels()
         WorkManager.getInstance(this)
         scheduleUsageSyncWorker(this)

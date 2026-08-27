@@ -5,11 +5,20 @@
 1. Android Studio Ladybug 以降を用意
 2. `local.properties` に `sdk.dir=/path/to/Android/sdk` を設定
 3. Firebase コンソールで `com.crouton.mimamori` を追加し、`google-services.json` を `app/` 直下に配置
-4. Gradle wrapper が必要な場合は次のコマンドで生成:
-   ```sh
-   gradle wrapper --gradle-version 8.10.2
-   ```
-   Android Studio でプロジェクトを開けば自動的に生成される。
+   (ローカル開発では下記の Auth エミュレータ用ダミーで可)
+
+## ローカル開発(Firebase Auth エミュレータ)
+
+実プロジェクト不要で動かせる。`google-services.json` はダミー値
+(project_id: demo-mimamori、mobilesdk_app_id は `1:<数字>:android:<16進>` 形式)で良い。
+
+```sh
+# サーバー(:3100)と Auth エミュレータ(:9099)をホストで起動した上で
+./gradlew :app:assembleDebug -PAPI_BASE_URL=http://10.0.2.2:3100 -PAUTH_EMULATOR_HOST=10.0.2.2:9099
+```
+
+`AUTH_EMULATOR_HOST` が空(既定)なら本番 Firebase に接続する。
+10.0.2.2 はエミュレータから見たホストの loopback。FCM 送信はエミュレータ非対応。
 
 ## サーバー API のベース URL
 

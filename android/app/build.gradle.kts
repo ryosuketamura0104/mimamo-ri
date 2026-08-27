@@ -20,6 +20,8 @@ android {
 
         // API のベース URL(端末から見たサーバー)。開発は adb reverse or 実機 IP を想定
         buildConfigField("String", "API_BASE_URL", "\"${project.findProperty("API_BASE_URL") ?: "http://10.0.2.2:3000"}\"")
+        // ローカル開発: Firebase Auth エミュレータのホスト(空なら本番 Firebase を使用)
+        buildConfigField("String", "AUTH_EMULATOR_HOST", "\"${project.findProperty("AUTH_EMULATOR_HOST") ?: ""}\"")
     }
 
     buildTypes {
