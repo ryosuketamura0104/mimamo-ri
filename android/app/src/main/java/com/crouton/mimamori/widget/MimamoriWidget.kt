@@ -23,7 +23,7 @@ import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
+import androidx.glance.color.ColorProvider
 
 /**
  * Glance で実装した Widget。
@@ -47,21 +47,29 @@ class MimamoriWidget : GlanceAppWidget() {
         val prefs = currentState<Preferences>()
         val title = prefs[KEY_TITLE] ?: "mimamo-ri"
         val body = prefs[KEY_BODY] ?: "今日も元気に過ごしましょう"
+        // ブランドカラー(深いエメラルドグリーン)。ライト/ダークで背景を切り替える
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(ColorProvider(Color.White))
-                .padding(12.dp),
+                .background(ColorProvider(day = Color(0xFFF6FBF8), night = Color(0xFF132019)))
+                .padding(14.dp),
             verticalAlignment = Alignment.Vertical.CenterVertically,
             horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
         ) {
             Text(
                 text = title,
-                style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 14.sp),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp,
+                    color = ColorProvider(day = Color(0xFF047857), night = Color(0xFF34D399)),
+                ),
             )
             Text(
                 text = body,
-                style = TextStyle(fontSize = 16.sp),
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = ColorProvider(day = Color(0xFF0F1F1A), night = Color(0xFFDCE7E1)),
+                ),
             )
         }
     }
