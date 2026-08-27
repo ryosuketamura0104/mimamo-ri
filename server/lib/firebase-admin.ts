@@ -14,6 +14,22 @@ function initializeFirebaseAdmin(): App | null {
   if (initialized) return firebaseApp;
   initialized = true;
 
+  // ローカル開発: Auth エミュレータ使用時はサービスアカウント不要で
+  // ID トークン検証ができる(FCM 送信は不可)
+  if (process.env.FIREBASE_AUTH_EMULATOR_HOST) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { getApps, initializeApp } = require("firebase-admin/app");
+    const existing = getApps();
+    firebaseApp =
+      existing[0] ??
+      initializeApp({
+        projectId:
+          process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? "demo-mimamori",
+      });
+    logger.info("Firebase Admin SDK を Auth エミュレータモードで初期化しました");
+    return firebaseApp;
+  }
+
   const { firebaseServiceAccountKey } = getFirebaseEnv();
   if (!firebaseServiceAccountKey) {
     logger.warn(

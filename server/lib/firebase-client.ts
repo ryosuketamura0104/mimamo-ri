@@ -1,7 +1,7 @@
 "use client";
 
 import { type FirebaseApp, getApps, initializeApp } from "firebase/app";
-import { type Auth, getAuth } from "firebase/auth";
+import { type Auth, connectAuthEmulator, getAuth } from "firebase/auth";
 
 /**
  * Web 側 Firebase Auth クライアント初期化(SSR安全)。
@@ -30,5 +30,12 @@ export function getFirebaseApp(): FirebaseApp {
 export function getFirebaseAuthClient(): Auth {
   if (auth) return auth;
   auth = getAuth(getFirebaseApp());
+  // ローカル開発: Auth エミュレータに接続する
+  const emulatorHost = process.env.NEXT_PUBLIC_FIREBASE_AUTH_EMULATOR_HOST;
+  if (emulatorHost) {
+    connectAuthEmulator(auth, `http://${emulatorHost}`, {
+      disableWarnings: true,
+    });
+  }
   return auth;
 }
