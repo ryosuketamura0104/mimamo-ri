@@ -26,7 +26,9 @@ function initializeFirebaseAdmin(): App | null {
         projectId:
           process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID ?? "demo-mimamori",
       });
-    logger.info("Firebase Admin SDK を Auth エミュレータモードで初期化しました");
+    logger.info(
+      "Firebase Admin SDK を Auth エミュレータモードで初期化しました",
+    );
     return firebaseApp;
   }
 
