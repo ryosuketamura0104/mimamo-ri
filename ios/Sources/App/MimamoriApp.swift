@@ -60,8 +60,15 @@ enum AppLifecycle {
 
         await SignalFlusher.flush()
 
-        // Widget 表示を最新メッセージで更新
+        // 天気取得用に現在地を更新(権限がある場合のみ)
+        LocationPushManager.shared.refreshLocationForWeather()
+
+        // Widget 表示を最新メッセージ+天気で更新。
+        // フォアグラウンドでは画面にメッセージが出るためローカル通知は出さない
         await WidgetContentStore.refreshFromServer()
+
+        // 最新の天気で毎朝の天気通知を予約し直す
+        NotificationPlanner.scheduleMorningWeather()
 
         // デバイストークンが未登録なら登録
         await AuthManager.shared.registerDeviceIfPossible()
@@ -149,8 +156,13 @@ private func handleBackgroundSync(_ task: BGAppRefreshTask) {
         // 歩数も取得(権限ダイアログは出さない)
         await PedometerManager.shared.collectAndEnqueue(allowPrompt: false)
         await SignalFlusher.flush()
-        // ついでに Widget 表示も更新
-        await WidgetContentStore.refreshFromServer()
+        // Widget 表示を更新し、未通知の新着メッセージがあればローカル通知
+        // (push 不達時のフォールバック経路)
+        if let newMessage = await WidgetContentStore.refreshFromServer() {
+            NotificationPlanner.notifyNewMessage(newMessage)
+        }
+        // 最新の天気で毎朝の天気通知を予約し直す
+        NotificationPlanner.scheduleMorningWeather()
         task.setTaskCompleted(success: true)
     }
     task.expirationHandler = { op.cancel() }

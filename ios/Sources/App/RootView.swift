@@ -41,13 +41,14 @@ struct SetupRequiredView: View {
 struct HomeView: View {
     @State private var lastCheckinAt: Date? = WidgetContentStore.lastCheckinAt
     @State private var message = WidgetContentStore.read()
+    @State private var weatherLine = WidgetContentStore.weatherLine
     @State private var checkinDone = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    // 見守り状態
+                    // 見守り状態 + 天気
                     HStack(spacing: 8) {
                         Circle()
                             .fill(Color.brand)
@@ -56,6 +57,11 @@ struct HomeView: View {
                             .font(.subheadline.weight(.medium))
                             .foregroundStyle(.secondary)
                         Spacer()
+                        if let weatherLine {
+                            Label(weatherLine, systemImage: "cloud.sun")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     .padding(.top, 4)
 
@@ -110,9 +116,14 @@ struct HomeView: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                message = WidgetContentStore.read()
-                lastCheckinAt = WidgetContentStore.lastCheckinAt
-                checkinDone = false
+                refreshFromStore()
+            }
+            .task {
+                // foregroundSync のサーバー取得が終わる頃に表示へ反映し、
+                // 表示できたメッセージは自動で既読にする(開いた=読んだ)
+                try? await Task.sleep(for: .seconds(2))
+                refreshFromStore()
+                await autoMarkRead()
             }
             // Siri / Spotlight に「元気です」操作を学習させる donation
             .userActivity(MimamoriConstants.reportAliveActivityType) { activity in
@@ -125,6 +136,20 @@ struct HomeView: View {
                 Task { await reportAlive() }
             }
         }
+    }
+
+    private func refreshFromStore() {
+        message = WidgetContentStore.read()
+        lastCheckinAt = WidgetContentStore.lastCheckinAt
+        weatherLine = WidgetContentStore.weatherLine
+        checkinDone = false
+    }
+
+    /// アプリでメッセージを表示できた時点で自動既読を返す。
+    private func autoMarkRead() async {
+        guard let id = WidgetContentStore.latestMessageId, !WidgetContentStore.latestMessageRead else { return }
+        try? await APIClient().markMessageRead(id: id)
+        WidgetContentStore.markLatestMessageRead()
     }
 
     private func reportAlive() async {

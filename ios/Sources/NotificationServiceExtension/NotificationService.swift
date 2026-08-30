@@ -21,9 +21,14 @@ final class NotificationService: UNNotificationServiceExtension {
         let kind = request.content.userInfo["kind"] as? String
 
         Task {
-            // widget_refresh: 通知の title/body をそのまま Widget に反映
+            // widget_refresh: 通知の title/body をそのまま Widget に反映。
+            // 毎朝の天気 push(title「今日の天気」)は天気欄へ、それ以外はメッセージ欄へ
             if kind == "widget_refresh" {
-                WidgetContentStore.write(title: request.content.title, body: request.content.body)
+                if request.content.title == "今日の天気" {
+                    WidgetContentStore.writeWeather(line: request.content.body)
+                } else {
+                    WidgetContentStore.write(title: request.content.title, body: request.content.body)
+                }
             }
 
             let unlocked = LockStateProbe.isDeviceUnlocked()

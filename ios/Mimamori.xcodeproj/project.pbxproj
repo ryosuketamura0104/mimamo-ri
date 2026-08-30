@@ -16,6 +16,7 @@
 		517751F1DFEFE5ABB739650C /* LockStateProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */; };
 		5998FB95643C7B4DA93B1F70 /* AppShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F17444A3564E81A583DF063 /* AppShortcuts.swift */; };
 		623BFA36F797A841D73BCCCA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8C37B210B6BFAEEAA9DA112E /* FirebaseAuth */; };
+		6D00DB9B238DC8BA7690E5F1 /* NotificationPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B06907272EB8D9C2093114 /* NotificationPlanner.swift */; };
 		790FE59B66B2232A22F10B8F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5407E1AE94A993728F13687 /* Constants.swift */; };
 		7C6468081EB58FEFBF50445E /* PedometerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A9536774CC82E041A485FE /* PedometerManager.swift */; };
 		86A8C01CB19E761EC9F8E38D /* MimamoriWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BB60F6C7D67E8EFC5E74BC /* MimamoriWidget.swift */; };
@@ -172,6 +173,7 @@
 		B5407E1AE94A993728F13687 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C387D971E58109C5B0A3AC5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C6A9536774CC82E041A485FE /* PedometerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerManager.swift; sourceTree = "<group>"; };
+		C9B06907272EB8D9C2093114 /* NotificationPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPlanner.swift; sourceTree = "<group>"; };
 		CD6E5C896BCDC07DC3E67F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CE1382F917D8DA2446024861 /* LocationPushExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LocationPushExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -324,6 +326,7 @@
 				2CA4D2B44F8E0B766C5CE0EC /* LoginView.swift */,
 				426517CBB5CFA66E19786958 /* Mimamori.entitlements */,
 				81B2F5855E9E1F7D3094F62A /* MimamoriApp.swift */,
+				C9B06907272EB8D9C2093114 /* NotificationPlanner.swift */,
 				5B047109EE3D2364CDC707D3 /* OffloadGuard.swift */,
 				C6A9536774CC82E041A485FE /* PedometerManager.swift */,
 				B049908307C3F1C97C72650E /* RootView.swift */,
@@ -551,6 +554,7 @@
 				49E02C4284EEAF3DFC46978C /* LocationPushManager.swift in Sources */,
 				A2271DCFB7ACDA16CA065598 /* LoginView.swift in Sources */,
 				8831551EF8485BF44C279040 /* MimamoriApp.swift in Sources */,
+				6D00DB9B238DC8BA7690E5F1 /* NotificationPlanner.swift in Sources */,
 				EF372DC81F72688E1273ABCA /* OffloadGuard.swift in Sources */,
 				7C6468081EB58FEFBF50445E /* PedometerManager.swift in Sources */,
 				A67DA0115DDD9365A90FF253 /* RootView.swift in Sources */,

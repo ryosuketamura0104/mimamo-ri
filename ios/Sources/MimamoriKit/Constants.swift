@@ -29,6 +29,19 @@ public enum MimamoriConstants {
     public static let widgetBodyKey = "widget_body"
     public static let widgetUpdatedAtKey = "widget_updated_at"
 
+    /// 天気表示(App Group UserDefaults)のキー。
+    public static let weatherLineKey = "widget_weather_line"
+    public static let weatherUpdatedAtKey = "widget_weather_updated_at"
+
+    /// 最新メッセージの id / 既読状態 / 通知済み id(App Group UserDefaults)。
+    public static let latestMessageIdKey = "latest_message_id"
+    public static let latestMessageReadKey = "latest_message_read"
+    public static let notifiedMessageIdKey = "notified_message_id"
+
+    /// 天気取得に使う最後の位置(App Group UserDefaults)。未取得なら東京。
+    public static let lastLatitudeKey = "last_latitude"
+    public static let lastLongitudeKey = "last_longitude"
+
     /// 最後に「元気です」を送った時刻(App Group UserDefaults)。
     public static let lastCheckinAtKey = "last_checkin_at"
 

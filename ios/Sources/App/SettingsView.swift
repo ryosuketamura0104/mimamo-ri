@@ -103,6 +103,22 @@ struct SettingsView: View {
                 Text("見守る側の家族に、Web ダッシュボードでこのコードを入力してもらうと連携が完了します。")
             }
 
+            Section {
+                Text("ショートカット App の「オートメーション」で、毎朝のアラーム停止時に mimamo-ri の「元気です」を実行するよう設定すると、目覚ましを止めるだけで家族に元気が伝わります。")
+                    .font(.footnote)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("ショートカット > オートメーション > 新規")
+                        .font(.footnote.bold())
+                    Text("「アラームが停止したとき」>「すぐに実行」> アクションで「元気です」を選択")
+                        .font(.footnote.bold())
+                }
+                Text("この設定は自動では行えないため、ご家族が手伝ってあげてください。")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            } header: {
+                Text("さらに確実にする(おすすめ)")
+            }
+
             Section("開発情報") {
                 LabeledContent("接続先", value: MimamoriConstants.apiBaseURL.absoluteString)
             }

@@ -72,6 +72,7 @@ public final class APIClient: Sendable {
         public let id: String
         public let body: String
         public let createdAt: Date
+        public let readAt: Date?
     }
 
     /// 見守る側からの最新メッセージを取得(見守られる側自身のみ)。
@@ -79,6 +80,38 @@ public final class APIClient: Sendable {
         struct Resp: Decodable { let messages: [APIClient.WatchedMessage] }
         let resp: Resp = try await requestJSON("GET", "/api/v1/messages", query: [URLQueryItem(name: "limit", value: String(limit))])
         return resp.messages
+    }
+
+    /// メッセージを既読にする(見守られる側)。冪等。
+    public func markMessageRead(id: String) async throws {
+        struct Empty: Encodable {}
+        try await requestIgnoringResponse("POST", "/api/v1/messages/\(id)/read", body: Empty())
+    }
+
+    public struct WeatherInfo: Decodable, Sendable {
+        public let condition: String
+        public let temperatureC: Double
+        public let temperatureMaxC: Double?
+        public let temperatureMinC: Double?
+
+        /// Widget や通知に出す一行表記(例「晴れ 28度 (20-29)」)。
+        public var line: String {
+            var s = "\(condition) \(Int(temperatureC.rounded()))度"
+            if let max = temperatureMaxC, let min = temperatureMinC {
+                s += " (\(Int(min.rounded()))-\(Int(max.rounded())))"
+            }
+            return s
+        }
+    }
+
+    /// 天気を取得する(Widget・通知用)。
+    public func fetchWeather(lat: Double, lng: Double) async throws -> WeatherInfo {
+        struct Resp: Decodable { let weather: WeatherInfo }
+        let resp: Resp = try await requestJSON("GET", "/api/v1/weather", query: [
+            URLQueryItem(name: "lat", value: String(lat)),
+            URLQueryItem(name: "lng", value: String(lng)),
+        ])
+        return resp.weather
     }
 
     // MARK: - 共通処理
