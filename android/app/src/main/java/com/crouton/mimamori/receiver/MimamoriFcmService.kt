@@ -68,7 +68,7 @@ class MimamoriFcmService : FirebaseMessagingService() {
                 if (auth.currentUserId() != null) {
                     val api = ApiClient(auth)
                     CoroutineScope(Dispatchers.IO).launch {
-                        runCatching { WidgetUpdater.refreshLatestMessage(applicationContext, api) }
+                        runCatching { WidgetUpdater.refreshWidget(applicationContext, api) }
                         api.close()
                     }
                 }

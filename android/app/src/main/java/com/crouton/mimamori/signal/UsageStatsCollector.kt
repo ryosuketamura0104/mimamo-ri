@@ -12,7 +12,8 @@ import com.crouton.mimamori.api.SignalReport
 import java.time.Instant
 import kotlinx.coroutines.flow.first
 
-private val Context.signalPrefs by preferencesDataStore("mimamori_signals")
+// UsageSyncWorker の新着メッセージ通知判定でも同じ DataStore を共有するため internal 公開
+internal val Context.signalPrefs by preferencesDataStore("mimamori_signals")
 
 private val LAST_SYNC_KEY = longPreferencesKey("last_usage_sync_epoch_ms")
 

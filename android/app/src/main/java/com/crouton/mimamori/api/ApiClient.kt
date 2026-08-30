@@ -94,6 +94,11 @@ class ApiClient(private val auth: AuthProvider) {
             header(HttpHeaders.Authorization, authedHeader())
         }.body()
 
+    suspend fun getWeather(lat: Double, lng: Double): WeatherResponse =
+        http.get("/api/v1/weather?lat=$lat&lng=$lng") {
+            header(HttpHeaders.Authorization, authedHeader())
+        }.body()
+
     suspend fun getEntitlement(): EntitlementDto =
         http.get("/api/v1/entitlement/me") {
             header(HttpHeaders.Authorization, authedHeader())

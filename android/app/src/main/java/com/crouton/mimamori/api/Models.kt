@@ -45,6 +45,15 @@ data class MessageDto(
 data class MessagesResponse(val messages: List<MessageDto>)
 
 @Serializable
+data class WeatherDto(
+    val condition: String,
+    val temperatureC: Double,
+)
+
+@Serializable
+data class WeatherResponse(val weather: WeatherDto)
+
+@Serializable
 data class EntitlementDto(
     val entitlement: String,
     val active: Boolean,
