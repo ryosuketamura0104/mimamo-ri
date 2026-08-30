@@ -15,6 +15,20 @@
       "when": 1783474920422,
       "tag": "0001_cool_victor_mancha",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788020407593,
+      "tag": "0002_handy_blizzard",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788029369067,
+      "tag": "0003_old_zaladane",
+      "breakpoints": true
     }
   ]
 }

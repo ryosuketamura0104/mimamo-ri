@@ -29,9 +29,23 @@ interface Settings {
   timezone: string;
 }
 
+interface SentMessage {
+  id: string;
+  body: string;
+  createdAt: string;
+  readAt: string | null;
+}
+
 function fmt(dt: string | null): string {
   if (!dt) return "---";
   return new Date(dt).toLocaleString("ja-JP");
+}
+
+function fmtHM(dt: string): string {
+  return new Date(dt).toLocaleTimeString("ja-JP", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 const SIGNAL_LABELS: Record<string, string> = {
@@ -143,7 +157,13 @@ function SettingsForm({ watchedId }: { watchedId: string }) {
   );
 }
 
-function MessageForm({ watchedId }: { watchedId: string }) {
+function MessageForm({
+  watchedId,
+  onSent,
+}: {
+  watchedId: string;
+  onSent: () => void;
+}) {
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -159,6 +179,7 @@ function MessageForm({ watchedId }: { watchedId: string }) {
       });
       setBody("");
       setMsg("送信しました");
+      onSent();
     } catch (err) {
       setMsg(`エラー: ${err instanceof Error ? err.message : String(err)}`);
     } finally {
@@ -186,6 +207,63 @@ function MessageForm({ watchedId }: { watchedId: string }) {
       </button>
       {msg && <p style={{ margin: "0.5rem 0 0" }}>{msg}</p>}
     </form>
+  );
+}
+
+function MessageSection({ watchedId }: { watchedId: string }) {
+  const { data, mutate } = useSWR<{ messages: SentMessage[] }>(
+    `/api/v1/watched/${watchedId}/messages`,
+    authedFetcher,
+    { refreshInterval: 30_000 },
+  );
+
+  return (
+    <>
+      <MessageForm watchedId={watchedId} onSent={() => mutate()} />
+      {data &&
+        (data.messages.length === 0 ? (
+          <p className="text-muted">送信したメッセージはまだありません。</p>
+        ) : (
+          <div className="card" style={{ padding: "0.75rem 1rem" }}>
+            <ul
+              style={{
+                listStyle: "none",
+                margin: 0,
+                padding: 0,
+                display: "grid",
+                gap: "0.6rem",
+              }}
+            >
+              {data.messages.map((m) => (
+                <li
+                  key={m.id}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                  }}
+                >
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{ margin: 0, overflowWrap: "anywhere" }}>
+                      {m.body}
+                    </p>
+                    <p className="text-small text-muted" style={{ margin: 0 }}>
+                      {fmt(m.createdAt)}
+                    </p>
+                  </div>
+                  {m.readAt ? (
+                    <span className="badge badge-normal">
+                      既読 {fmtHM(m.readAt)}
+                    </span>
+                  ) : (
+                    <span className="badge">未読</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+    </>
   );
 }
 
@@ -310,7 +388,7 @@ export default function WatchedDetailPage({
       )}
 
       <h2>Widget メッセージを送る</h2>
-      <MessageForm watchedId={watchedId} />
+      <MessageSection watchedId={watchedId} />
 
       <h2>見守り設定</h2>
       <SettingsForm watchedId={watchedId} />

@@ -8,6 +8,7 @@ import {
   real,
   text,
   timestamp,
+  unique,
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
@@ -131,6 +132,8 @@ export const devices = pgTable(
  * observedAt はシグナル発生時刻、reportedAt はサーバー受信時刻。
  * 拡張(NSE/DAM等)が遅延バッチで報告するため両者を分離する。
  * 冪等キー: (watchedId, deviceId, type, observedAt) で重複挿入を防止。
+ * deviceId は NULL があり得るため NULLS NOT DISTINCT が必須
+ * (通常の UNIQUE は NULL 同士を別値扱いし、dedup が効かなくなる)。
  *
  * type:
  *   location_ping / unlock_probe / screen_time / steps / widget_probe /
@@ -155,12 +158,9 @@ export const signals = pgTable(
     meta: jsonb("meta").$type<Record<string, unknown>>(),
   },
   (t) => [
-    uniqueIndex("signals_dedup_key").on(
-      t.watchedId,
-      t.type,
-      t.observedAt,
-      t.deviceId,
-    ),
+    unique("signals_dedup_key")
+      .on(t.watchedId, t.type, t.observedAt, t.deviceId)
+      .nullsNotDistinct(),
     index("signals_watched_observed_idx").on(t.watchedId, t.observedAt),
   ],
 );
@@ -294,6 +294,8 @@ export const messages = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`now()`)
       .notNull(),
+    // 見守られる側がメッセージを確認した時刻(未読なら null)
+    readAt: timestamp("read_at", { withTimezone: true }),
   },
   (t) => [index("messages_watched_created_idx").on(t.watchedId, t.createdAt)],
 );

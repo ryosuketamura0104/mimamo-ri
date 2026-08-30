@@ -1,5 +1,7 @@
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import {
+  devices,
   HUMAN_SIGNAL_TYPES,
   STEPS_SIGNAL_TYPE,
   signals,
@@ -57,6 +59,14 @@ export async function POST(request: Request) {
     );
   }
 
+  // deviceId は FK 制約があるため、本人の登録済みデバイス以外は null に落とす
+  // (未知の deviceId をそのまま insert すると 500 になる)
+  const userDevices = await db
+    .select({ id: devices.id })
+    .from(devices)
+    .where(eq(devices.userId, user.id));
+  const validDeviceIds = new Set(userDevices.map((d) => d.id));
+
   const rows = body.signals
     .filter(
       (s) => typeof s.type === "string" && typeof s.observedAt === "string",
@@ -64,7 +74,8 @@ export async function POST(request: Request) {
     .map((s) => ({
       id: newId(),
       watchedId: user.id,
-      deviceId: s.deviceId ?? null,
+      deviceId:
+        s.deviceId && validDeviceIds.has(s.deviceId) ? s.deviceId : null,
       type: s.type,
       observedAt: new Date(s.observedAt),
       meta: s.meta ?? null,
