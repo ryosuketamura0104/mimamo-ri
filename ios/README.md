@@ -96,3 +96,68 @@ iOS の「非使用の App を取り除く」の発動条件は非公開で、�
 
 観測データは App Group UserDefaults の `signal_queue.v1` に蓄積され、
 アプリ本体で確認できる。
+
+## 実測(発表用の計測)
+
+「アプリを開かれない前提」の各経路が実際どれだけ機能するかを測るための仕組みが入っている。
+
+### 記録されるもの
+
+`widget_probe` の meta に、発火のたびに次が乗る:
+
+| フィールド | 意味 |
+|---|---|
+| `gap_s` | 前回の getTimeline からの経過秒数 |
+| `battery` | `charging` / `full` / `unplugged` / `unknown` |
+| `level` | 電池残量(iOS 17 以降は 5% 刻みに丸められる) |
+| `low_power` | 低電力モードの ON/OFF |
+| `locked` | その瞬間ロックされていたか |
+
+加えて、電源未接続から接続への遷移を `charging_start` として記録する。
+iOS には充電開始でアプリを起こす公開 API がないため、これは起床時の
+スナップショット同士の差分による推定であり、起床の合間に挿抜が完結した場合は観測できない。
+
+### 常駐計測モード
+
+設定 > 計測(検証用) でオンにすると、位置情報を低精度で出し続けてプロセスを常駐させ、
+`UIApplication.protectedDataDidBecomeAvailableNotification` を購読してロック解除を
+`unlock_event` として記録する。サンプリングの `unlock_probe` と件数を比べることで、
+どれだけ取りこぼしていたかが分かる。「常に許可」が必要で電池を消費するため既定はオフ。
+
+### 集計
+
+```
+GET /api/v1/watched/:id/telemetry?days=7
+```
+
+Widget の発火回数・時間帯分布・間隔の中央値/p90/最大・1時間超の空白の回数、
+最長の空白が起きた前後のコンディション(低電力モード・ロック・残量)、
+ロック解除のイベント数とサンプリング数の比較を返す。
+
+### 実機が必須
+
+シミュレータでは以下が測れないため、数値を出すには実機で数日運用する必要がある。
+
+- **電池関連は取れない**: シミュレータに電池がないため `batteryState` は常に `unknown` を返す。
+  したがって `charging_start` も発生しない
+- **Widget の更新予算が実機と違う**: シミュレータは実機のような予算制限がかからないため、
+  発火頻度が楽観的に出る
+
+### 注意: 署名なしビルドでは App Group が働かない
+
+`CODE_SIGNING_ALLOWED=NO` でビルドするとエンタイトルメントが埋め込まれず、
+`UserDefaults(suiteName:)` がアプリ個別のコンテナにフォールバックする。
+その結果アプリ本体と各 Extension でデータが共有されず、Widget が記録したシグナルが
+アプリから送信されないという分かりにくい壊れ方をする。計測時は署名ありでビルドすること。
+
+```sh
+xcodebuild -project Mimamori.xcodeproj -scheme Mimamori \
+  -destination 'platform=iOS Simulator,id=<UDID>' build
+```
+
+共有コンテナができているかは次で確認できる:
+
+```sh
+find ~/Library/Developer/CoreSimulator/Devices/<UDID>/data/Containers/Shared/AppGroup \
+  -name "group.com.crouton.mimamori.plist"
+```
