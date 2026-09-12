@@ -68,4 +68,8 @@ public enum MimamoriConstants {
     public static let lastBatteryStateKey = "last_battery_state"
     /// 常駐計測モード(位置情報を出しっぱなしにしてロック解除イベントを捕まえる)の ON/OFF。
     public static let residencyEnabledKey = "residency_enabled"
+    /// ロケーションプッシュのトークン(取得できたら保存し、APNs トークンが揃い次第登録する)。
+    public static let locationPushTokenKey = "location_push_token"
+    /// APNs のデバイストークン登録が失敗した理由(診断表示用)。
+    public static let pushRegistrationErrorKey = "push_registration_error"
 }

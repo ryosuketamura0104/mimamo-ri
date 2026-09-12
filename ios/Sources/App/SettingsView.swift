@@ -1,3 +1,4 @@
+import FamilyControls
 import MimamoriKit
 import SwiftUI
 import UserNotifications
@@ -7,12 +8,19 @@ import UserNotifications
 struct SettingsView: View {
     @EnvironmentObject private var auth: AuthManager
 
-    @State private var screenTimeAuthorized = ScreenTimeManager.shared.isAuthorized
+    // 認可状態は一度読むだけだと古いまま表示され続ける。
+    // FamilyControls の AuthorizationCenter は起動直後は .notDetermined を返しうるため、
+    // 監視して変化を受け取る(位置情報・常駐モードも同様)。
+    @ObservedObject private var familyControls = AuthorizationCenter.shared
+    @ObservedObject private var location = LocationPushManager.shared
+    @ObservedObject private var residency = ResidencyManager.shared
     @State private var screenTimeError: String?
     @State private var notificationsAuthorized: Bool?
     @State private var invitation: APIClient.Invitation?
     @State private var invitationError: String?
     @State private var residencyOn = DeviceTelemetry.isResidencyEnabled
+
+    private var screenTimeAuthorized: Bool { familyControls.authorizationStatus == .approved }
 
     var body: some View {
         Form {
@@ -134,7 +142,7 @@ struct SettingsView: View {
                         }
                     },
                 ))
-                LabeledContent("状態", value: ResidencyManager.shared.statusLabel)
+                LabeledContent("状態", value: residency.statusLabel)
             } header: {
                 Text("計測(検証用)")
             } footer: {
@@ -143,6 +151,22 @@ struct SettingsView: View {
 
             Section("開発情報") {
                 LabeledContent("接続先", value: MimamoriConstants.apiBaseURL.absoluteString)
+                LabeledContent("APNsトークン", value: apnsTokenStatus)
+                if let err = pushRegistrationError {
+                    Text("登録エラー: \(err)")
+                        .font(.footnote)
+                        .foregroundStyle(.red)
+                }
+                Button("プッシュ登録をやり直す") {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("ロケーションプッシュ")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    Text(location.locationPushStatus)
+                        .font(.footnote)
+                }
             }
         }
         .navigationTitle("設定")
@@ -152,12 +176,22 @@ struct SettingsView: View {
         }
     }
 
+    private var pushRegistrationError: String? {
+        UserDefaults(suiteName: MimamoriConstants.appGroup)?
+            .string(forKey: MimamoriConstants.pushRegistrationErrorKey)
+    }
+
+    private var apnsTokenStatus: String {
+        let d = UserDefaults(suiteName: MimamoriConstants.appGroup)
+        return d?.string(forKey: MimamoriConstants.pendingPushTokenKey) == nil ? "未取得" : "取得済み"
+    }
+
     private var locationAlways: Bool {
-        LocationPushManager.shared.authorizationStatus == .authorizedAlways
+        location.authorizationStatus == .authorizedAlways
     }
 
     private var locationStatusLabel: String {
-        switch LocationPushManager.shared.authorizationStatus {
+        switch location.authorizationStatus {
         case .authorizedAlways: return "常に許可"
         case .authorizedWhenInUse: return "使用中のみ"
         case .denied, .restricted: return "拒否"
@@ -178,7 +212,6 @@ struct SettingsView: View {
         do {
             try await ScreenTimeManager.shared.requestAuthorization()
             try ScreenTimeManager.shared.startMonitoring()
-            screenTimeAuthorized = ScreenTimeManager.shared.isAuthorized
             screenTimeError = nil
         } catch {
             screenTimeError = "許可に失敗しました: \(error.localizedDescription)"

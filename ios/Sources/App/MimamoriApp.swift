@@ -89,6 +89,7 @@ enum AppLifecycle {
 
 final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        Breadcrumb.drop("didFinishLaunching")
         AuthManager.shared.configure()
 
         // BGTaskScheduler の登録
@@ -113,8 +114,18 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
         let center = UNUserNotificationCenter.current()
         center.delegate = self
         center.setNotificationCategories([checkinCategory])
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in
-            DispatchQueue.main.async { application.registerForRemoteNotifications() }
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            Breadcrumb.drop("requestAuthorization granted=\(granted) err=\(error?.localizedDescription ?? "nil")")
+            DispatchQueue.main.async {
+                Breadcrumb.drop("registerForRemoteNotifications 呼び出し")
+                application.registerForRemoteNotifications()
+            }
+        }
+        // 権限ダイアログが未応答だと上の completion は来ない。
+        // 登録自体は権限と独立に走るので、念のため直接も呼んでおく。
+        DispatchQueue.main.async {
+            Breadcrumb.drop("registerForRemoteNotifications 呼び出し(無条件)")
+            application.registerForRemoteNotifications()
         }
         return true
     }
@@ -122,11 +133,21 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let token = deviceToken.map { String(format: "%02x", $0) }.joined()
         // トークン発行はログインより先に起きるため、App Group に保留してから登録を試みる
-        UserDefaults(suiteName: MimamoriConstants.appGroup)?
-            .set(token, forKey: MimamoriConstants.pendingPushTokenKey)
+        Breadcrumb.drop("APNsトークン取得 len=\(token.count)")
+        let defaults = UserDefaults(suiteName: MimamoriConstants.appGroup)
+        defaults?.set(token, forKey: MimamoriConstants.pendingPushTokenKey)
+        defaults?.removeObject(forKey: MimamoriConstants.pushRegistrationErrorKey)
         Task { @MainActor in
             await AuthManager.shared.registerDeviceIfPossible()
         }
+    }
+
+    /// APNs のデバイストークン取得に失敗した場合。
+    /// 握り潰すと「APNsトークン未取得」の理由が分からなくなるため記録する。
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        Breadcrumb.drop("APNs登録失敗 \(error.localizedDescription)")
+        UserDefaults(suiteName: MimamoriConstants.appGroup)?
+            .set(error.localizedDescription, forKey: MimamoriConstants.pushRegistrationErrorKey)
     }
 
     // MARK: - UNUserNotificationCenterDelegate
