@@ -5,7 +5,7 @@ import { authenticate } from "../_lib/auth";
 
 /**
  * GET /api/v1/weather?lat=xx&lng=xx
- * Widget 用の天気情報。Open-Meteo から現在天気と本日の最高/最低気温を取得する。
+ * 天気情報。Open-Meteo から現在天気・体感・湿度・降水確率と7日分の予報を取得する。
  * lat/lng 省略時は東京。Open-Meteo 失敗時は 200 で従来モックにフォールバックし、
  * クライアント(Widget)を壊さない。
  */
@@ -37,8 +37,15 @@ export async function GET(request: Request) {
       mock: true,
       coordinates: { lat, lng },
       weather: {
-        condition: "sunny",
+        condition: "くもり",
+        code: 3,
         temperatureC: 22,
+        apparentTemperatureC: null,
+        humidity: null,
+        temperatureMaxC: 24,
+        temperatureMinC: 18,
+        precipitationChance: 0,
+        daily: [],
         updatedAt: new Date().toISOString(),
       },
     });

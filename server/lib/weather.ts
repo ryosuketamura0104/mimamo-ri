@@ -9,15 +9,41 @@ import { logger } from "./logger";
 /** 座標省略時のデフォルト(東京駅付近) */
 export const TOKYO_COORDINATES = { lat: 35.6812, lng: 139.7671 } as const;
 
+/** 1日分の予報 */
+export interface DailyForecast {
+  /** YYYY-MM-DD */
+  date: string;
+  /** WMO コード(アイコン選択用に生の値も返す) */
+  code: number;
+  /** 日本語ラベル */
+  condition: string;
+  temperatureMaxC: number;
+  temperatureMinC: number;
+  /** 降水確率の最大値(%) */
+  precipitationChance: number;
+  /** 降水量の合計(mm) */
+  precipitationMm: number;
+}
+
 export interface WeatherResult {
   /** 現在の天気の日本語ラベル(晴れ/くもり/雨 など) */
   condition: string;
+  /** 現在の WMO コード */
+  code: number;
   /** 現在気温(摂氏) */
   temperatureC: number;
+  /** 体感気温(摂氏) */
+  apparentTemperatureC: number | null;
+  /** 湿度(%) */
+  humidity: number | null;
   /** 本日の最高気温(摂氏) */
   temperatureMaxC: number;
   /** 本日の最低気温(摂氏) */
   temperatureMinC: number;
+  /** 本日の降水確率(%) */
+  precipitationChance: number;
+  /** 今日から7日分の予報(先頭が今日) */
+  daily: DailyForecast[];
   /** 取得時刻(ISO文字列) */
   updatedAt: string;
 }
@@ -58,11 +84,16 @@ interface OpenMeteoResponse {
   current?: {
     temperature_2m?: number;
     weather_code?: number;
+    apparent_temperature?: number;
+    relative_humidity_2m?: number;
   };
   daily?: {
+    time?: string[];
     weather_code?: number[];
     temperature_2m_max?: number[];
     temperature_2m_min?: number[];
+    precipitation_probability_max?: number[];
+    precipitation_sum?: number[];
   };
 }
 
@@ -83,10 +114,12 @@ export async function fetchWeather(
   const params = new URLSearchParams({
     latitude: String(lat),
     longitude: String(lng),
-    current: "temperature_2m,weather_code",
-    daily: "weather_code,temperature_2m_max,temperature_2m_min",
+    current:
+      "temperature_2m,weather_code,apparent_temperature,relative_humidity_2m",
+    daily:
+      "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum",
     timezone: "auto",
-    forecast_days: "1",
+    forecast_days: "7",
   });
   const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`, {
     signal: AbortSignal.timeout(10_000),
@@ -109,11 +142,44 @@ export async function fetchWeather(
     throw new Error("Open-Meteo レスポンスに必要な値がありません");
   }
 
+  // 7日分を組み立てる。欠損日はスキップし、取れた分だけ返す
+  const d = json.daily;
+  const daily: DailyForecast[] = [];
+  const days = d?.time?.length ?? 0;
+  for (let i = 0; i < days; i++) {
+    const dayCode = d?.weather_code?.[i];
+    const max = d?.temperature_2m_max?.[i];
+    const min = d?.temperature_2m_min?.[i];
+    const date = d?.time?.[i];
+    if (
+      typeof dayCode !== "number" ||
+      typeof max !== "number" ||
+      typeof min !== "number" ||
+      typeof date !== "string"
+    ) {
+      continue;
+    }
+    daily.push({
+      date,
+      code: dayCode,
+      condition: weatherCodeToJa(dayCode),
+      temperatureMaxC: max,
+      temperatureMinC: min,
+      precipitationChance: d?.precipitation_probability_max?.[i] ?? 0,
+      precipitationMm: d?.precipitation_sum?.[i] ?? 0,
+    });
+  }
+
   const data: WeatherResult = {
     condition: weatherCodeToJa(code),
+    code,
     temperatureC,
+    apparentTemperatureC: json.current?.apparent_temperature ?? null,
+    humidity: json.current?.relative_humidity_2m ?? null,
     temperatureMaxC,
     temperatureMinC,
+    precipitationChance: daily[0]?.precipitationChance ?? 0,
+    daily,
     updatedAt: new Date().toISOString(),
   };
   cache.set(key, { fetchedAt: Date.now(), data });

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { weatherCodeToJa } from "./weather";
+import { type DailyForecast, weatherCodeToJa } from "./weather";
 
 describe("weatherCodeToJa", () => {
   it("快晴・晴れ・くもり", () => {
@@ -49,5 +49,30 @@ describe("weatherCodeToJa", () => {
     expect(weatherCodeToJa(42)).toBe("不明");
     expect(weatherCodeToJa(-1)).toBe("不明");
     expect(weatherCodeToJa(100)).toBe("不明");
+  });
+});
+
+describe("週間予報の形", () => {
+  it("WeatherResult は7日分の daily を持てる", () => {
+    // 型レベルの確認。実通信は行わず、構造の取り違えを防ぐ目的
+    const sample: DailyForecast = {
+      date: "2026-09-12",
+      code: 61,
+      condition: weatherCodeToJa(61),
+      temperatureMaxC: 25,
+      temperatureMinC: 20,
+      precipitationChance: 97,
+      precipitationMm: 4,
+    };
+    expect(sample.condition).toBe("雨");
+    expect(sample.precipitationChance).toBeGreaterThan(0);
+  });
+
+  it("降水を伴うコードは雨系のラベルになる", () => {
+    // Widget のアイコン切り替えがコード依存なので、代表値の対応を固定する
+    expect(weatherCodeToJa(61)).toBe("雨");
+    expect(weatherCodeToJa(80)).toBe("にわか雨");
+    expect(weatherCodeToJa(95)).toBe("雷雨");
+    expect(weatherCodeToJa(71)).toBe("雪");
   });
 });
