@@ -26,4 +26,14 @@ public enum SignalType {
     public static let nse = "nse"
     public static let appOpen = "app_open"
     public static let checkinTap = "checkin_tap"
+
+    // MARK: - 計測用(常駐方式の検証)
+
+    /// 保護データが利用可能になった = ロック解除の「イベント」。
+    /// unlockProbe(状態のサンプリング)と対になる概念で、捕捉率の比較に使う。
+    public static let unlockEvent = "unlock_event"
+    /// 保護データが利用不可になる直前 = ロックの「イベント」。
+    public static let lockEvent = "lock_event"
+    /// 電源未接続から接続への遷移。人が充電器に挿した可能性を示す。
+    public static let chargingStart = "charging_start"
 }

@@ -59,4 +59,13 @@ public enum MimamoriConstants {
 
     /// 「元気です」の NSUserActivity タイプ(Info.plist の NSUserActivityTypes と一致)。
     public static let reportAliveActivityType = "com.crouton.mimamori.ReportAlive"
+
+    // MARK: - 計測(Widget 発火頻度・充電遷移・常駐方式の検証)
+
+    /// 前回 Widget の getTimeline が走った時刻。発火間隔の実測に使う。
+    public static let lastWidgetFireAtKey = "last_widget_fire_at"
+    /// 前回観測した充電状態(rawValue)。遷移検出に使う。
+    public static let lastBatteryStateKey = "last_battery_state"
+    /// 常駐計測モード(位置情報を出しっぱなしにしてロック解除イベントを捕まえる)の ON/OFF。
+    public static let residencyEnabledKey = "residency_enabled"
 }

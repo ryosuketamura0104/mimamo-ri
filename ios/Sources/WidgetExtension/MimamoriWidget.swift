@@ -49,11 +49,23 @@ struct MimamoriTimelineProvider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<MimamoriEntry>) -> Void) {
         Task {
+            // 実測用: 前回発火からの間隔と、その時点の端末コンディションを記録する。
+            // 更新予算は OS 任せなので、これを貯めないと「実際どれだけ機能するか」が分からない
+            let gap = DeviceTelemetry.recordWidgetFireAndMeasureGap()
+            let snapshot = await MainActor.run { DeviceTelemetry.snapshot() }
+            var probeMeta = DeviceTelemetry.metaFields(from: snapshot)
+            if let gap { probeMeta["gap_s"] = String(gap) }
+
             // タイムライン更新のタイミングで生存プローブを記録し、送信も試みる
             if LockStateProbe.isDeviceUnlocked() == true {
                 await SignalQueue.shared.append(Signal(type: SignalType.unlockProbe))
             }
-            await SignalQueue.shared.append(Signal(type: SignalType.widgetProbe))
+            await SignalQueue.shared.append(Signal(type: SignalType.widgetProbe, meta: probeMeta))
+
+            // 充電の挿抜はイベントで取れないため、スナップショット同士の差分で推定する
+            if let charging = DeviceTelemetry.detectChargingTransition(current: snapshot) {
+                await SignalQueue.shared.append(charging)
+            }
 
             // Widget 自身がサーバーから最新表示を取得する(アプリを開かせない)。
             // reload=false 必須: ここで再読込を要求すると getTimeline が無限ループする

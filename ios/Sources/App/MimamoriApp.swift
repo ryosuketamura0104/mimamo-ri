@@ -75,6 +75,15 @@ enum AppLifecycle {
 
         // ロケーションプッシュの監視開始(権限とエンタイトルメントが揃っている場合のみ)
         LocationPushManager.shared.startIfPossible()
+
+        // 常駐計測モード(設定が ON のときだけ)。ロック解除をイベントとして捕まえられるかの検証
+        ResidencyManager.shared.startIfEnabled()
+
+        // 充電遷移の検出(アプリが開かれた瞬間のスナップショットからも拾う)
+        let snapshot = DeviceTelemetry.snapshot()
+        if let charging = DeviceTelemetry.detectChargingTransition(current: snapshot) {
+            await SignalQueue.shared.append(charging)
+        }
     }
 }
 

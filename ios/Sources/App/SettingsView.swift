@@ -12,6 +12,7 @@ struct SettingsView: View {
     @State private var notificationsAuthorized: Bool?
     @State private var invitation: APIClient.Invitation?
     @State private var invitationError: String?
+    @State private var residencyOn = DeviceTelemetry.isResidencyEnabled
 
     var body: some View {
         Form {
@@ -117,6 +118,27 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             } header: {
                 Text("さらに確実にする(おすすめ)")
+            }
+
+            Section {
+                Toggle("常駐計測モード", isOn: Binding(
+                    get: { residencyOn },
+                    set: { newValue in
+                        residencyOn = newValue
+                        DeviceTelemetry.isResidencyEnabled = newValue
+                        if newValue {
+                            LocationPushManager.shared.requestPermission()
+                            ResidencyManager.shared.startIfEnabled()
+                        } else {
+                            ResidencyManager.shared.stop()
+                        }
+                    },
+                ))
+                LabeledContent("状態", value: ResidencyManager.shared.statusLabel)
+            } header: {
+                Text("計測(検証用)")
+            } footer: {
+                Text("位置情報を出しっぱなしにしてアプリを常駐させ、ロック解除を「イベント」として記録できるかを検証します。電池を消費するため、計測が終わったらオフにしてください。")
             }
 
             Section("開発情報") {

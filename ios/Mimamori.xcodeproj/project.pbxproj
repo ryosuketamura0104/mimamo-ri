@@ -10,6 +10,7 @@
 		0A4864C43F42B7EF9037F95E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB1E29BF47AF2982EE18CA /* AuthManager.swift */; };
 		0D20598F31F9CD979DA5A0F4 /* MimamoriKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0EEB46C90DD246F56A7243CE /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		361BC4B9F41FE40CA3D20B84 /* DeviceTelemetry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F52E632F439214D01B14B2 /* DeviceTelemetry.swift */; };
 		372AE8966F7B7B6976F56DC5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE6D0D3F20772112B838E29 /* SettingsView.swift */; };
 		463EE5B1869F862D49BE86E4 /* SignalQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB63D29BCC896CF5A389323 /* SignalQueue.swift */; };
 		49E02C4284EEAF3DFC46978C /* LocationPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DEE4EFBF8CD2669BE57C04 /* LocationPushManager.swift */; };
@@ -42,6 +43,7 @@
 		EAEFB5597A35D9AA2432B79A /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9B5ED6C2FD033E37758A223E /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EC0664DFAC6A6D5F3A978979 /* LocationPushExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CE1382F917D8DA2446024861 /* LocationPushExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EF372DC81F72688E1273ABCA /* OffloadGuard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B047109EE3D2364CDC707D3 /* OffloadGuard.swift */; };
+		F8292FC6E23E044CC0883856 /* ResidencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B757624F38CD91D611BA0B /* ResidencyManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +154,7 @@
 		48DEE4EFBF8CD2669BE57C04 /* LocationPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPushManager.swift; sourceTree = "<group>"; };
 		4B6E2F5BDD360B4137619A83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		52F52E632F439214D01B14B2 /* DeviceTelemetry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTelemetry.swift; sourceTree = "<group>"; };
 		5B047109EE3D2364CDC707D3 /* OffloadGuard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffloadGuard.swift; sourceTree = "<group>"; };
 		5BA4E24FEEF5E7001695C7BE /* DeviceActivityMonitorExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeviceActivityMonitorExtension.entitlements; sourceTree = "<group>"; };
 		63DB1E29BF47AF2982EE18CA /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -173,6 +176,7 @@
 		B5407E1AE94A993728F13687 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C387D971E58109C5B0A3AC5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C6A9536774CC82E041A485FE /* PedometerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PedometerManager.swift; sourceTree = "<group>"; };
+		C7B757624F38CD91D611BA0B /* ResidencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidencyManager.swift; sourceTree = "<group>"; };
 		C9B06907272EB8D9C2093114 /* NotificationPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPlanner.swift; sourceTree = "<group>"; };
 		CD6E5C896BCDC07DC3E67F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CE1382F917D8DA2446024861 /* LocationPushExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LocationPushExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -269,6 +273,7 @@
 				84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */,
 				984A3E7AF7A3B943C8317B5C /* BrandColor.swift */,
 				B5407E1AE94A993728F13687 /* Constants.swift */,
+				52F52E632F439214D01B14B2 /* DeviceTelemetry.swift */,
 				F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */,
 				9406B86D5429C7F19CA3362F /* Signal.swift */,
 				1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */,
@@ -329,6 +334,7 @@
 				C9B06907272EB8D9C2093114 /* NotificationPlanner.swift */,
 				5B047109EE3D2364CDC707D3 /* OffloadGuard.swift */,
 				C6A9536774CC82E041A485FE /* PedometerManager.swift */,
+				C7B757624F38CD91D611BA0B /* ResidencyManager.swift */,
 				B049908307C3F1C97C72650E /* RootView.swift */,
 				2E323D7FCD42433BC0108446 /* ScreenTimeManager.swift */,
 				3EE6D0D3F20772112B838E29 /* SettingsView.swift */,
@@ -537,6 +543,7 @@
 				E3797A158EDA8D42A94A43AC /* AuthTokenProvider.swift in Sources */,
 				8B7D6E060419DA9DE5D0EC10 /* BrandColor.swift in Sources */,
 				790FE59B66B2232A22F10B8F /* Constants.swift in Sources */,
+				361BC4B9F41FE40CA3D20B84 /* DeviceTelemetry.swift in Sources */,
 				517751F1DFEFE5ABB739650C /* LockStateProbe.swift in Sources */,
 				9921617F30A2DC73ABC7FF7C /* Signal.swift in Sources */,
 				B87856CA0EB06C83D095E0C2 /* SignalFlusher.swift in Sources */,
@@ -557,6 +564,7 @@
 				6D00DB9B238DC8BA7690E5F1 /* NotificationPlanner.swift in Sources */,
 				EF372DC81F72688E1273ABCA /* OffloadGuard.swift in Sources */,
 				7C6468081EB58FEFBF50445E /* PedometerManager.swift in Sources */,
+				F8292FC6E23E044CC0883856 /* ResidencyManager.swift in Sources */,
 				A67DA0115DDD9365A90FF253 /* RootView.swift in Sources */,
 				91BF61CB21BEF91E307C1913 /* ScreenTimeManager.swift in Sources */,
 				372AE8966F7B7B6976F56DC5 /* SettingsView.swift in Sources */,
