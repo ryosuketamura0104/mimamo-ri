@@ -161,3 +161,76 @@ xcodebuild -project Mimamori.xcodeproj -scheme Mimamori \
 find ~/Library/Developer/CoreSimulator/Devices/<UDID>/data/Containers/Shared/AppGroup \
   -name "group.com.crouton.mimamori.plist"
 ```
+
+## 実機での計測手順(ハチワレ)
+
+### 1. Mac 側で3つを起動したままにする
+
+計測中はこの3つが動き続けている必要がある。1つでも落ちると実機からの送信が止まる。
+
+| サービス | 起動 | 待ち受け |
+|---|---|---|
+| PostgreSQL | `cd server && docker compose up -d postgres` | 5433 |
+| 開発サーバー | `cd server && pnpm dev --port 3100` | `*:3100` |
+| Auth エミュレータ | 下記 `start.sh` | `*:9099` |
+
+Auth エミュレータは**状態を保持しない**。素で起動し直すとユーザーが消え、
+実機のログインが切れて計測が止まるため、必ず import/export つきで起動する。
+
+```sh
+pnpx firebase-tools emulators:start --only auth --project demo-mimamori \
+  --import auth-state --export-on-exit auth-state
+```
+
+`firebase.json` の `emulators.auth.host` は `0.0.0.0` にしておく
+(既定の `127.0.0.1` だと実機から到達できない)。
+
+### 2. 接続先を Mac の LAN IP にする
+
+`project.yml` の以下2つを Mac の IP に合わせてから `xcodegen generate` し直す。
+**LAN IP が変わったら再ビルドが必要**なので、計測中は Mac の IP を固定しておくのが安全。
+
+```yaml
+API_BASE_URL: http://<MacのIP>:3100
+FIREBASE_AUTH_EMULATOR_HOST: <MacのIP>:9099
+```
+
+`NSAllowsLocalNetworking: true` を宣言済みなのでプライベート IP への平文通信は通る。
+
+### 3. ビルドとインストール
+
+```sh
+xcodebuild -project Mimamori.xcodeproj -scheme Mimamori \
+  -destination 'platform=iOS,id=<デバイスUDID>' \
+  -derivedDataPath build/DerivedDataDevice -allowProvisioningUpdates build
+
+xcrun devicectl device install app --device <デバイスUDID> \
+  build/DerivedDataDevice/Build/Products/Debug-iphoneos/Mimamori.app
+```
+
+デバイス UDID は `xcrun devicectl list devices` で確認する。
+
+### 4. 実機側で手で行う操作
+
+ここは実機の画面操作が必要で、自動化できない。
+
+1. アプリを開いて `watched@example.com` / `mimamori-dev-1` でログイン
+2. 通知を許可
+3. 設定 > 計測(検証用) で「常駐計測モード」をオン → 位置情報を**「常に許可」**にする
+   (「使用中のみ」ではプロセスが常駐せず `unlock_event` が取れない)
+4. ホーム画面にウィジェットを配置する(中サイズ推奨。ロック画面にも置くとなお良い)
+5. 設定 > 見守りシグナル でスクリーンタイムの利用を許可(任意)
+
+あとは普段どおり使うだけでシグナルが溜まる。
+
+### 5. 結果の取り出し
+
+見守る側のトークンで集計 API を叩く。
+
+```sh
+curl -H "Authorization: Bearer <watcher の IDトークン>" \
+  "http://localhost:3100/api/v1/watched/<watchedId>/telemetry?days=7"
+```
+
+`days` は計測した日数に合わせる。平均発火回数は端が欠けた初日・最終日を除いた
+完全な日だけで計算されるため、最低3日は回すこと。

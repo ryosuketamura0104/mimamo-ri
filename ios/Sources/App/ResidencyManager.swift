@@ -17,12 +17,13 @@ import UIKit
 /// コスト: 「常に許可」が必須で、電池も消費する。実測して割に合うか判断するための
 /// 検証モードであり、既定では OFF。
 @MainActor
-final class ResidencyManager: NSObject, CLLocationManagerDelegate {
+final class ResidencyManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = ResidencyManager()
 
     private let manager = CLLocationManager()
     private var observing = false
-    private(set) var isRunning = false
+    @Published private(set) var isRunning = false
+    @Published private(set) var statusLabel = "オフ"
 
     private override init() {
         super.init()
@@ -38,10 +39,12 @@ final class ResidencyManager: NSObject, CLLocationManagerDelegate {
         observeProtectedDataNotifications()
         guard DeviceTelemetry.isResidencyEnabled else {
             stop()
+            refreshStatus()
             return
         }
         guard manager.authorizationStatus == .authorizedAlways else {
             isRunning = false
+            refreshStatus()
             return
         }
         guard !isRunning else { return }
@@ -49,20 +52,24 @@ final class ResidencyManager: NSObject, CLLocationManagerDelegate {
         manager.showsBackgroundLocationIndicator = true
         manager.startUpdatingLocation()
         isRunning = true
+        refreshStatus()
     }
 
     func stop() {
+        defer { refreshStatus() }
         guard isRunning else { return }
         manager.stopUpdatingLocation()
         manager.allowsBackgroundLocationUpdates = false
         isRunning = false
     }
 
-    /// 常駐の可否を判定するための現在の状態(設定画面の表示用)。
-    var statusLabel: String {
-        if !DeviceTelemetry.isResidencyEnabled { return "オフ" }
-        if manager.authorizationStatus != .authorizedAlways { return "位置情報「常に許可」が必要" }
-        return isRunning ? "計測中" : "待機中"
+    /// 設定画面の表示用テキストを現在の状態から作り直す。
+    private func refreshStatus() {
+        if !DeviceTelemetry.isResidencyEnabled { statusLabel = "オフ"; return }
+        if manager.authorizationStatus != .authorizedAlways {
+            statusLabel = "位置情報「常に許可」が必要"; return
+        }
+        statusLabel = isRunning ? "計測中" : "待機中"
     }
 
     // MARK: - ロック解除イベント
