@@ -1,9 +1,10 @@
+import http2 from "node:http2";
 import { importPKCS8, SignJWT } from "jose";
 import { getApnsEnv } from "./env";
 import { logger } from "./logger";
 
 /**
- * APNs 送信ラッパー(token-based, HTTP/2 経由の fetch)。
+ * APNs 送信ラッパー(token-based, node:http2 で HTTP/2 接続)。
  * push-type と interruption-level を明示的に指定できるようにする。
  */
 
@@ -60,6 +61,31 @@ async function makeJwt(): Promise<string | null> {
   return token;
 }
 
+/**
+ * APNs への HTTP/2 セッション。ホストごとに使い回す。
+ *
+ * Node の fetch(undici)は HTTP/2 を話せず、APNs は HTTP/2 必須のため
+ * fetch では接続できない(レスポンスの HTTP/2 フレームを HTTP/1.1 として
+ * 解釈しようとして HTTPParserError になる)。そのため node:http2 を直接使う。
+ */
+const sessions = new Map<string, http2.ClientHttp2Session>();
+
+function getSession(host: string): http2.ClientHttp2Session {
+  const existing = sessions.get(host);
+  if (existing && !existing.closed && !existing.destroyed) return existing;
+
+  const session = http2.connect(host);
+  // セッションが死んだらキャッシュから外し、次回張り直す
+  const drop = () => {
+    if (sessions.get(host) === session) sessions.delete(host);
+  };
+  session.on("error", drop);
+  session.on("close", drop);
+  session.on("goaway", drop);
+  sessions.set(host, session);
+  return session;
+}
+
 export async function sendApns(
   params: ApnsSendParams,
 ): Promise<{ ok: boolean; status: number; reason?: string }> {
@@ -76,6 +102,8 @@ export async function sendApns(
       : 10);
 
   const headers: Record<string, string> = {
+    ":method": "POST",
+    ":path": `/3/device/${params.deviceToken}`,
     authorization: `bearer ${jwt}`,
     "apns-topic": topic,
     "apns-push-type": params.pushType,
@@ -88,21 +116,53 @@ export async function sendApns(
     headers["apns-collapse-id"] = params.collapseId;
   }
 
-  const url = `${host}/3/device/${params.deviceToken}`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(params.payload),
+  const body = JSON.stringify(params.payload);
+
+  const result = await new Promise<{ status: number; body: string }>(
+    (resolve, reject) => {
+      let req: http2.ClientHttp2Stream;
+      try {
+        req = getSession(host).request(headers);
+      } catch (error) {
+        reject(error);
+        return;
+      }
+      let status = 0;
+      let chunks = "";
+      req.setEncoding("utf8");
+      req.on("response", (h) => {
+        status = Number(h[":status"] ?? 0);
+      });
+      req.on("data", (chunk) => {
+        chunks += chunk;
+      });
+      req.on("end", () => resolve({ status, body: chunks }));
+      req.on("error", reject);
+      req.setTimeout(10_000, () => {
+        req.close(http2.constants.NGHTTP2_CANCEL);
+        reject(new Error("APNs リクエストがタイムアウトしました"));
+      });
+      req.end(body);
+    },
+  ).catch((error: unknown) => {
+    logger.warn("APNs 送信でエラー", {
+      message: error instanceof Error ? error.message : String(error),
+      pushType: params.pushType,
+    });
+    return null;
   });
 
-  if (res.ok) return { ok: true, status: res.status };
-  const body = await res.text();
+  if (!result) return { ok: false, status: 0, reason: "request_failed" };
+
+  if (result.status >= 200 && result.status < 300) {
+    return { ok: true, status: result.status };
+  }
   logger.warn("APNs 送信失敗", {
-    status: res.status,
-    body,
+    status: result.status,
+    body: result.body,
     pushType: params.pushType,
   });
-  return { ok: false, status: res.status, reason: body };
+  return { ok: false, status: result.status, reason: result.body };
 }
 
 /**

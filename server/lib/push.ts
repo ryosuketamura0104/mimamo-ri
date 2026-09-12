@@ -2,6 +2,7 @@ import { and, eq } from "drizzle-orm";
 import { devices } from "@/app/db/schema";
 import { apnsAlertPayload, apnsLocationPayload, sendApns } from "./apns";
 import { db } from "./db";
+import { getApnsEnv } from "./env";
 import { sendFcm } from "./fcm";
 import { logger } from "./logger";
 
@@ -116,11 +117,16 @@ export async function pushLocationPing(watchedUserId: string): Promise<void> {
   const ios = await iosDevicesFor(watchedUserId);
   const results = await Promise.allSettled(
     ios.map((d) => {
-      const token = d.locationPushToken ?? d.pushToken;
+      // ロケーションプッシュは専用トークンが必須。APNs のデバイストークンでは
+      // 送れない(startMonitoringLocationPushes が返す別物)
+      const token = d.locationPushToken;
       if (!token) return Promise.resolve();
       return sendApns({
         deviceToken: token,
         pushType: "location",
+        // トピックはバンドルIDそのものではなく <bundleId>.location-query。
+        // 通常のトピックで送ると APNs が DeviceTokenNotForTopic を返す
+        topic: `${getApnsEnv().bundleId}.location-query`,
         payload: apnsLocationPayload(),
         priority: 5,
       });
