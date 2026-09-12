@@ -355,6 +355,9 @@ export const HUMAN_SIGNAL_TYPES = new Set<string>([
   "app_open",
   "checkin_tap",
   "usage_stats",
+  // 常駐計測モードで得られる「ロック解除イベント」。解除には Face ID か
+  // パスコードが要るため、サンプリングの unlock_probe より確度が高い
+  "unlock_event",
 ]);
 
 /**
@@ -368,4 +371,10 @@ export const STEPS_SIGNAL_TYPE = "steps";
 export const DEVICE_ONLY_SIGNAL_TYPES = new Set<string>([
   "location_ping",
   "nse",
+  // ロック(画面を消した)イベント。人の操作を伴うが、自動ロックでも発生するため人シグナルにはしない
+  "lock_event",
+  // 充電開始。人が挿した可能性を示す一方、最適化充電の再開・停電からの復電・
+  // 卓上ホルダー常設など人以外の発生源が多いため、現時点では人シグナルに含めない。
+  // 実測でどの程度ノイズが乗るかを見てから判断する(ADR-0001 参照)
+  "charging_start",
 ]);

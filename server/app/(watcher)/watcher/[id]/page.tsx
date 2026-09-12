@@ -50,7 +50,10 @@ function fmtHM(dt: string): string {
 
 const SIGNAL_LABELS: Record<string, string> = {
   location_ping: "位置ping",
-  unlock_probe: "ロック解除",
+  unlock_probe: "ロック解除(推定)",
+  unlock_event: "ロック解除",
+  lock_event: "ロック",
+  charging_start: "充電開始",
   screen_time: "アプリ使用",
   steps: "歩数",
   widget_probe: "Widget更新",
