@@ -6,6 +6,8 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.production
+.env.*
 
 # エディタ・OS
 .DS_Store
@@ -61,3 +63,7 @@ ios/GoogleService-Info.plist
 .claude/reports/
 .claude/scheduled_tasks.lock
 .claude/worktrees/
+
+# APNs 認証キー(絶対にコミットしない)
+*.p8
+server/apns-key.p8

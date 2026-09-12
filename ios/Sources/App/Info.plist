@@ -37,6 +37,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>FirebaseAuthEmulatorHost</key>
 	<string>$(FIREBASE_AUTH_EMULATOR_HOST)</string>
 	<key>NSAppTransportSecurity</key>

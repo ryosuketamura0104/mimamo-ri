@@ -36,7 +36,9 @@
 		B87856CA0EB06C83D095E0C2 /* SignalFlusher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */; };
 		BD2BFAE79A2FEEA50833D417 /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
 		C059ED5F607AF2B65C206605 /* MimamoriDeviceActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E302E7FB5417852AB01645D /* MimamoriDeviceActivityMonitor.swift */; };
+		C3DD936B0F0BD9D0D5A7A1DA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF806BFD6AA079D605FD1E2E /* GoogleService-Info.plist */; };
 		CD1D1262D6491EB53D775549 /* MimamoriKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 771D4995F0CA617B7E9787DC /* MimamoriKit.framework */; };
+		D0DE74335EA0E184D5BE7681 /* Breadcrumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7BE431C792428F4A22BD8 /* Breadcrumb.swift */; };
 		E09CFDFE6912A9E2E06505FE /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */; };
 		E3797A158EDA8D42A94A43AC /* AuthTokenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */; };
 		E87DC5E77E3E1CDD0A46214E /* LocationPushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D64E96C01082490971A4A11 /* LocationPushService.swift */; };
@@ -141,6 +143,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0CF7BE431C792428F4A22BD8 /* Breadcrumb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breadcrumb.swift; sourceTree = "<group>"; };
 		1312DBB7DA5D6F9C50F7E656 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1A2634AE1C5CD9CCC8A4B139 /* SignalFlusher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalFlusher.swift; sourceTree = "<group>"; };
 		1F0B11DA33F26E0FB4B3D3CD /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -181,6 +184,7 @@
 		CD6E5C896BCDC07DC3E67F80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CE1382F917D8DA2446024861 /* LocationPushExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LocationPushExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0089FB0A389FC17B4413BA8 /* DeviceActivityMonitorExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DeviceActivityMonitorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF806BFD6AA079D605FD1E2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockStateProbe.swift; sourceTree = "<group>"; };
 		FDC87BE25939E2784C09F439 /* WidgetContentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetContentStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,12 +270,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		85913C0E258FE28B8622EC6F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DF806BFD6AA079D605FD1E2E /* GoogleService-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		85F485EAD0AC850CD258AA23 /* MimamoriKit */ = {
 			isa = PBXGroup;
 			children = (
 				4FEA1ECFDD1AF5F9CE0B2C10 /* APIClient.swift */,
 				84BF7E20FD9FF4FF3A06B8E5 /* AuthTokenProvider.swift */,
 				984A3E7AF7A3B943C8317B5C /* BrandColor.swift */,
+				0CF7BE431C792428F4A22BD8 /* Breadcrumb.swift */,
 				B5407E1AE94A993728F13687 /* Constants.swift */,
 				52F52E632F439214D01B14B2 /* DeviceTelemetry.swift */,
 				F0D3E24D5AE7E53419428E97 /* LockStateProbe.swift */,
@@ -296,6 +309,7 @@
 		CD44A50BE7DD385179B1BE7A = {
 			isa = PBXGroup;
 			children = (
+				85913C0E258FE28B8622EC6F /* Resources */,
 				6D5DF1C1742658307CB714A6 /* Sources */,
 				8036E3CAE201C99C0109F5C5 /* Products */,
 			);
@@ -369,6 +383,7 @@
 			buildConfigurationList = E2D509237633D5B030F92DA1 /* Build configuration list for PBXNativeTarget "Mimamori" */;
 			buildPhases = (
 				752CC58A4F4E99607B42DE77 /* Sources */,
+				8D47CFA0099B55CD39E91919 /* Resources */,
 				A205F87CB94B0ACCA39B66F9 /* Frameworks */,
 				F41342551632905C68A98BE1 /* Embed Foundation Extensions */,
 				90EAA6FCA9FB69E13D405829 /* Embed Frameworks */,
@@ -474,27 +489,27 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					0F7355576886D6EE2FEDD214 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = ABHGTY2RG2;
 						ProvisioningStyle = Automatic;
 					};
 					3E450AAF06847F506208E173 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = ABHGTY2RG2;
 						ProvisioningStyle = Automatic;
 					};
 					3E86DEE32B4285BA867CB72B = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = ABHGTY2RG2;
 						ProvisioningStyle = Automatic;
 					};
 					8D56721B0B3CF9AA9D7DC617 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = ABHGTY2RG2;
 						ProvisioningStyle = Automatic;
 					};
 					93D8974BF89FCD0ADFAB7F15 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = ABHGTY2RG2;
 						ProvisioningStyle = Automatic;
 					};
 					E270C2EDEE728275BF39FB80 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = ABHGTY2RG2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -526,6 +541,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		8D47CFA0099B55CD39E91919 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3DD936B0F0BD9D0D5A7A1DA /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3A71F510F68F89BDDDF758EC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -542,6 +568,7 @@
 				E09CFDFE6912A9E2E06505FE /* APIClient.swift in Sources */,
 				E3797A158EDA8D42A94A43AC /* AuthTokenProvider.swift in Sources */,
 				8B7D6E060419DA9DE5D0EC10 /* BrandColor.swift in Sources */,
+				D0DE74335EA0E184D5BE7681 /* Breadcrumb.swift in Sources */,
 				790FE59B66B2232A22F10B8F /* Constants.swift in Sources */,
 				361BC4B9F41FE40CA3D20B84 /* DeviceTelemetry.swift in Sources */,
 				517751F1DFEFE5ABB739650C /* LockStateProbe.swift in Sources */,
@@ -716,7 +743,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = "http://localhost:3100";
+				API_BASE_URL = "https://mimamori-server-969422387966.asia-northeast1.run.app";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -749,11 +776,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ABHGTY2RG2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FIREBASE_AUTH_EMULATOR_HOST = "127.0.0.1:9099";
+				FIREBASE_AUTH_EMULATOR_HOST = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -800,7 +827,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				API_BASE_URL = "http://localhost:3100";
+				API_BASE_URL = "https://mimamori-server-969422387966.asia-northeast1.run.app";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -833,7 +860,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ABHGTY2RG2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
